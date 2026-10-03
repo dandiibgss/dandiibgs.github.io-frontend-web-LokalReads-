@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Penulis - LokalReads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Anti-Bentrokan Bootstrap */
+        a {
+            text-decoration: none !important;
+            color: inherit;
+        }
+        a:hover {
+            color: inherit;
+        }
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        }
+        @font-face {
+            font-family: 'PP Writer';
+            src: url('asset/PPWriter-Bold.otf') format('opentype');
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Regular.otf') format('opentype');
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Medium.otf') format('opentype');
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Semibold.otf') format('opentype');
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Bold.otf') format('opentype');
+            font-weight: 700;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Black.otf') format('opentype');
+            font-weight: 900;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #1A1A1A;
+            line-height: 1.6;
+        }
+
+        input, select, textarea, button {
+            font-family: inherit;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* NAVBAR */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            border-bottom: 1px solid #F3F4F6;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            margin-left: -20px;
+        }
+
+        .author-pill {
+            background: #1A1A1A;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .menu-toggle .bar {
+            height: 3px;
+            width: 100%;
+            background-color: #111111;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #4B5563;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #1A1A1A;
+        }
+
+        .btn-logout {
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            color: #555555;
+            border: 1px solid #E5E7EB;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: #F3F4F6;
+            color: #1A1A1A;
+        }
+
+        .main-content {
+            padding: 40px 8% 80px 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.7s ease;
+        }
+
+        .page-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .page-head h1 {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .page-head p {
+            color: #6B7280;
+            font-size: 15px;
+        }
+
+        .btn-primary, button.btn-primary {
+            background: #1A1A1A !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 14px 26px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .btn-primary:hover, button.btn-primary:hover {
+            background: #374151 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        /* STAT CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 55px;
+        }
+
+        .stat-card {
+            border: 1px solid #F3F4F6;
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            border-color: #E5E7EB;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .stat-number {
+            font-size: 34px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            color: #6B7280;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        section {
+            margin-bottom: 55px;
+        }
+
+        .section-header {
+            margin-bottom: 22px;
+        }
+
+        .section-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .section-header p {
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+
+        /* FORM PANEL */
+        .form-panel {
+            border: 1px solid #E5E7EB;
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 55px;
+            background: #F9FAFB;
+            display: none;
+        }
+
+        .form-panel.open {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .form-panel h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .form-panel .panel-sub {
+            color: #6B7280;
+            font-size: 14px;
+            margin-bottom: 26px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            background: #fff;
+            color: #1A1A1A;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #1A1A1A;
+            box-shadow: 0 0 0 4px rgba(26, 26, 26, 0.05);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #9CA3AF;
+            margin-top: 6px;
+        }
+
+        /* COVER UPLOAD */
+        .cover-uploader {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .cover-preview {
+            width: 110px;
+            height: 150px;
+            border-radius: 12px;
+            background: #F3F4F6;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px dashed #D1D5DB;
+            color: #9CA3AF;
+            font-size: 28px;
+        }
+
+        .cover-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-controls {
+            flex: 1;
+        }
+
+        .btn-upload {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 1.5px solid #E5E7EB;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-upload:hover {
+            border-color: #1A1A1A;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .btn-save {
+            background: #1A1A1A;
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-save:hover {
+            background: #374151;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1.5px solid #E5E7EB;
+            color: #4B5563;
+            padding: 14px 26px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:hover {
+            border-color: #9CA3AF;
+            color: #1A1A1A;
+        }
+
+        /* DAFTAR BUKU SAYA */
+        .my-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .book-row {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #F3F4F6;
+            border-radius: 24px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .book-row:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+            border-color: #E5E7EB;
+        }
+
+        .book-row .cover {
+            width: 100%;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #F3F4F6;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
+        }
+
+        .book-row .cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-row .info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .book-row .info h4 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1A1A1A;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .book-row .info .genre {
+            font-size: 12px;
+            color: #9CA3AF;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mini-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: #F9FAFB;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #F3F4F6;
+        }
+
+        .mini-stat {
+            text-align: center;
+            font-size: 11px;
+            color: #6B7280;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .mini-stat:not(:last-child) {
+            border-right: 1px solid #E5E7EB;
+        }
+
+        .mini-stat b {
+            display: block;
+            font-size: 15px;
+            font-weight: 800;
+            color: #1A1A1A;
+            margin-bottom: 2px;
+        }
+
+        .row-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-mini {
+            flex: 1;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px 0;
+            border-radius: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid #E5E7EB;
+            background: #fff;
+            color: #1A1A1A;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-mini:hover {
+            background: #1A1A1A;
+            color: #fff;
+            border-color: #1A1A1A;
+        }
+
+        .btn-mini.btn-delete {
+            border-color: #FEE2E2;
+            color: #EF4444;
+        }
+
+        .btn-mini.btn-delete:hover {
+            background: #EF4444;
+            color: #fff;
+            border-color: #EF4444;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            border: 2px dashed #E5E7EB;
+            border-radius: 24px;
+            color: #9CA3AF;
+        }
+
+        .empty-state .ico {
+            font-size: 44px;
+            margin-bottom: 14px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            color: #4B5563;
+            margin-bottom: 6px;
+        }
+
+        /* ULASAN TERBARU */
+        .review-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .feed-item {
+            display: flex;
+            gap: 14px;
+            padding: 18px 0;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .feed-item:last-child {
+            border-bottom: none;
+        }
+
+        .feed-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #1A1A1A;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .feed-body {
+            flex: 1;
+        }
+
+        .feed-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .feed-name {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .feed-stars {
+            color: #F59E0B;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .feed-book {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+
+        .feed-text {
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .feed-time {
+            font-size: 12px;
+            color: #9CA3AF;
+            margin-left: auto;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1A1A1A;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 200;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-right {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                border-bottom: 1px solid #F3F4F6;
+                padding: 20px;
+                gap: 15px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                align-items: stretch;
+            }
+
+            .nav-right.active {
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                padding: 8px 0;
+                border-bottom: 1px solid #F3F4F6;
+            }
+
+            .btn-logout {
+                width: 100%;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            /* Hamburger animation when active */
+            .menu-toggle.active .bar:nth-child(1) {
+                transform: translateY(7.5px) rotate(45deg);
+            }
+            .menu-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-toggle.active .bar:nth-child(3) {
+                transform: translateY(-7.5px) rotate(-45deg);
+            }
+
+            .main-content {
+                padding: 20px 15px 60px 15px;
+            }
+
+            .page-head {
+                margin-bottom: 24px;
+            }
+
+            .page-head h1 {
+                font-size: 26px;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-number {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cover-uploader {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .cover-preview {
+                margin: 0 auto;
+            }
+
+            .upload-controls {
+                width: 100%;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn-save, .btn-cancel {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        footer {
+            background: #000000;
+            color: #fff;
+            padding: 3rem 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .footer-section a {
+            display: block;
+            color: #fff;
+            opacity: 0.8;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <a href="index.html" class="logo">
+                <img src="asset/lokalreads_horizontal_logo_black.png" alt="LokalReads"
+                    style="height: 34px; object-fit: contain;">
+            </a>
+            <span class="author-pill">Penulis</span>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <div class="nav-right" id="navCollapse">
+            <a href="index.html" class="nav-link">Lihat Situs</a>
+            <a href="dashboard_user.html" class="nav-link">Mode Pembaca</a>
+            <button class="btn-logout" onclick="doLogout()">Keluar</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-head">
+            <div>
+                <h1 id="welcomeTitle">Dashboard Penulis</h1>
+                <p>Kelola karyamu dan pantau perkembangan pembaca.</p>
+            </div>
+            <button class="btn-primary" id="newBookBtn"><i class="fas fa-plus"></i> Terbitkan Buku Baru</button>
+        </div>
+
+        <!-- STATISTIK -->
+        <div class="stats-grid" id="statsGrid"><!-- via JS --></div>
+
+        <!-- FORM UPLOAD / EDIT -->
+        <div class="form-panel" id="formPanel">
+            <h2 id="formTitle">Terbitkan Buku Baru</h2>
+            <p class="panel-sub">Lengkapi detail bukumu di bawah ini.</p>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Judul Buku</label>
+                    <input type="text" id="fJudul" placeholder="Masukkan judul buku">
+                </div>
+                <div class="form-group">
+                    <label>Genre</label>
+                    <select id="fGenre"></select>
+                </div>
+            </div>
+
+            <div class="form-group full">
+                <label>Cover Buku</label>
+                <div class="cover-uploader">
+                    <div class="cover-preview" id="coverPreview"><i class="fas fa-image"></i></div>
+                    <div class="upload-controls">
+                        <input type="file" id="fCoverFile" accept="image/*" style="display:none;">
+                        <button type="button" class="btn-upload" id="pickCoverBtn"><i class="fas fa-upload"></i> Unggah
+                            Gambar</button>
+                        <p class="hint">Atau tempel URL gambar:</p>
+                        <input type="text" id="fCoverUrl" placeholder="https://..." style="margin-top:6px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group full">
+                <label>Sinopsis</label>
+                <textarea id="fSinopsis" rows="3" placeholder="Tuliskan ringkasan singkat yang menarik..."></textarea>
+            </div>
+
+            <div class="form-group full">
+                <label>Isi Cerita</label>
+                <textarea id="fIsi" rows="10"
+                    placeholder="Tuliskan isi cerita di sini. Pisahkan antar-paragraf dengan baris kosong."></textarea>
+                <p class="hint">Tekan Enter dua kali untuk memisahkan paragraf.</p>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-save" id="saveBookBtn">Terbitkan</button>
+                <button class="btn-cancel" id="cancelBtn">Batal</button>
+            </div>
+        </div>
+
+        <!-- BUKU SAYA -->
+        <section>
+            <div class="section-header">
+                <h2>Buku Saya</h2>
+                <p>Daftar karya yang telah kamu terbitkan.</p>
+            </div>
+            <div id="myBooksSlot"></div>
+        </section>
+
+        <!-- ULASAN TERBARU -->
+        <section>
+            <div class="section-header">
+                <h2>Ulasan Terbaru</h2>
+                <p>Tanggapan terbaru dari para pembacamu.</p>
+            </div>
+            <div id="reviewFeedSlot"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <img src="asset/lokalreads_horizontal_logo_white.png" alt="LokalReads"
+                    style="height: 32px; object-fit: contain; margin-bottom: 15px; display: block;">
+                <p style="opacity: 0.8; font-size: 0.9rem">
+                    Platform e-book lokal Indonesia untuk mendukung penulis dan UMKM
+                    kreatif.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4>Home</h4>
+                <a href="index.html">Semua Buku</a>
+                <a href="index.html">Kategori</a>
+            </div>
+            <div class="footer-section">
+                <h4>Pembaca</h4>
+                <a href="dashboard_user.html">Dashboard Pembaca</a>
+                <a href="index.html">Mulai Membaca</a>
+            </div>
+            <div class="footer-section">
+                <h4>Informasi</h4>
+                <a href="#">Tentang Kami</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 LokalReads. All rights reserved.</div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="lokalreads.js"></script>
+    <script>
+        var user = LR.requireAuthor();
+        if (user) {
+            console.log("INIT BERJALAN");
+            init();
+        }
+
+        var editingId = null;
+        var coverData = ''; // dataURL hasil unggah file
+
+        function init() {
+            document.getElementById('welcomeTitle').innerText = 'Halo, ' + user.fullname.split(' ')[0];
+
+            // isi pilihan genre
+            var sel = document.getElementById('fGenre');
+            LR.GENRES.forEach(function (g) {
+                var o = document.createElement('option'); o.value = g; o.textContent = g; sel.appendChild(o);
+            });
+
+            wireForm();
+            renderAll();
+
+            // Hamburger Menu Toggle
+            var menuToggle = document.getElementById("menuToggle");
+            var navCollapse = document.getElementById("navCollapse");
+            if (menuToggle && navCollapse) {
+                menuToggle.addEventListener("click", function () {
+                    menuToggle.classList.toggle("active");
+                    navCollapse.classList.toggle("active");
+                });
+            }
+        }
+
+        function renderAll() {
+            renderStats();
+            renderMyBooks();
+            renderReviewFeed();
+        }
+
+        /* ---------- STATISTIK ---------- */
+        function renderStats() {
+            var s = LR.getAuthorStats(user.email);
+            var cards = [
+                { icon: '<img src="foto/buku terbit.png" alt="Buku" style="width: 28px; height: 28px; object-fit: contain;">', num: s.totalBooks, label: 'Buku Terbit' },
+                { icon: '<img src="foto/Penulis lOkal.png" alt="Pembaca" style="width: 28px; height: 28px; object-fit: contain;">', num: s.totalReaders, label: 'Total Pembaca' },
+                { icon: '<img src="foto/rating.png" alt="Rating" style="width: 28px; height: 28px; object-fit: contain;">', num: s.avgRating ? s.avgRating.toFixed(1) : '–', label: 'Rating Rata-rata' },
+                { icon: '<img src="foto/ulasan.png" alt="Ulasan" style="width: 28px; height: 28px; object-fit: contain;">', num: s.totalReviews, label: 'Total Ulasan' }
+            ];
+            document.getElementById('statsGrid').innerHTML = cards.map(function (c) {
+                return '<div class="stat-card">' +
+                    '<div class="stat-icon" style="background: transparent; border: 1.5px solid #1A1A1A;">' + c.icon + '</div>' +
+                    '<div class="stat-number">' + c.num + '</div>' +
+                    '<div class="stat-label">' + c.label + '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        /* ---------- BUKU SAYA ---------- */
+        function renderMyBooks() {
+            var books = LR.getAuthorBooks(user.email);
+            var slot = document.getElementById('myBooksSlot');
+            if (!books.length) {
+                slot.innerHTML =
+                    '<div class="empty-state">' +
+                    '<div class="ico"><img src="foto/nulis buku.png" alt="Nulis Buku" style="width: 48px; height: 48px; object-fit: contain;"></div>' +
+                    '<h3>Belum ada buku</h3>' +
+                    '<p>Mulai terbitkan karya pertamamu dengan tombol "Terbitkan Buku Baru".</p>' +
+                    '</div>';
+                return;
+            }
+            slot.innerHTML = '<div class="my-books">' + books.map(function (b) {
+                var st = LR.getBookStats(b.id);
+                var avg = st.avgRating ? st.avgRating.toFixed(1) : '–';
+                return '<div class="book-row">' +
+                    '<div class="cover">' + (b.img ? '<img src="' + LR.escapeHtml(b.img) + '" alt="">' : (LR.GENRE_ICONS[b.genre] || '📕')) + '</div>' +
+                    '<div class="info">' +
+                    '<h4>' + LR.escapeHtml(b.judul) + '</h4>' +
+                    '<div class="genre">' + LR.escapeHtml(b.genre) + '</div>' +
+                    '<div class="mini-stats">' +
+                    '<div class="mini-stat"><b>' + st.readers + '</b>Pembaca</div>' +
+                    '<div class="mini-stat"><b>' + avg + '★</b>Rating</div>' +
+                    '<div class="mini-stat"><b>' + st.reviewCount + '</b>Ulasan</div>' +
+                    '</div>' +
+                    '<div class="row-actions">' +
+                    '<button class="btn-mini" onclick="editBook(\'' + b.id + '\')"><i class="fas fa-pen"></i> Edit</button>' +
+                    '<a class="btn-mini" href="detail_buku.html?id=' + encodeURIComponent(b.id) + '">Lihat</a>' +
+                    '<button class="btn-mini btn-delete" onclick="deleteBook(\'' + b.id + '\')"><i class="fas fa-trash"></i> Hapus</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }).join('') + '</div>';
+        }
+
+        /* ---------- ULASAN TERBARU ---------- */
+        function renderReviewFeed() {
+            var s = LR.getAuthorStats(user.email);
+            var slot = document.getElementById('reviewFeedSlot');
+            if (!s.recentReviews.length) {
+                slot.innerHTML = '<div class="empty-state" style="padding:40px;"><p>Belum ada ulasan untuk bukumu.</p></div>';
+                return;
+            }
+            slot.innerHTML = '<div class="review-feed">' + s.recentReviews.map(function (item) {
+                var r = item.review;
+                var initial = (r.userName || '?').charAt(0).toUpperCase();
+                return '<div class="feed-item">' +
+                    '<div class="feed-avatar">' + LR.escapeHtml(initial) + '</div>' +
+                    '<div class="feed-body">' +
+                    '<div class="feed-top">' +
+                    '<span class="feed-name">' + LR.escapeHtml(r.userName) + '</span>' +
+                    '<span class="feed-stars">' + LR.starString(r.rating) + '</span>' +
+                    '<span class="feed-time">' + LR.timeAgo(r.createdAt) + '</span>' +
+                    '</div>' +
+                    '<div class="feed-book">pada "' + LR.escapeHtml(item.book.judul) + '"</div>' +
+                    (r.text ? '<div class="feed-text">' + LR.escapeHtml(r.text) + '</div>' : '') +
+                    '</div>' +
+                    '</div>';
+            }).join('') + '</div>';
+        }
+
+        /* ---------- FORM: create + edit ---------- */
+        function wireForm() {
+            var panel = document.getElementById('formPanel');
+            var fileInput = document.getElementById('fCoverFile');
+            var preview = document.getElementById('coverPreview');
+
+            document.getElementById('newBookBtn').addEventListener('click', function () {
+                console.log("BUTTON DIKLIK");
+                openForm(null);
+            });
+            document.getElementById('cancelBtn').addEventListener('click', closeForm);
+
+            document.getElementById('pickCoverBtn').addEventListener('click', function () { fileInput.click(); });
+            fileInput.addEventListener('change', function (e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                var reader = new FileReader();
+                reader.onload = function (ev) {
+                    coverData = ev.target.result;
+                    preview.innerHTML = '<img src="' + coverData + '" alt="">';
+                    document.getElementById('fCoverUrl').value = '';
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // preview saat user mengetik URL
+            document.getElementById('fCoverUrl').addEventListener('input', function (e) {
+                var url = e.target.value.trim();
+                coverData = '';
+                if (url) preview.innerHTML = '<img src="' + LR.escapeHtml(url) + '" alt="">';
+                else preview.innerHTML = '<i class="fas fa-image"></i>';
+            });
+
+            document.getElementById('saveBookBtn').addEventListener('click', saveBook);
+        }
+
+        function openForm(book) {
+            editingId = book ? book.id : null;
+            coverData = '';
+            document.getElementById('formTitle').innerText = book ? 'Edit Buku' : 'Terbitkan Buku Baru';
+            document.getElementById('saveBookBtn').innerText = book ? 'Simpan Perubahan' : 'Terbitkan';
+            document.getElementById('fJudul').value = book ? book.judul : '';
+            document.getElementById('fGenre').value = book ? book.genre : LR.GENRES[0];
+            document.getElementById('fSinopsis').value = book ? book.sinopsis : '';
+            document.getElementById('fIsi').value = book ? htmlToPlain(book.isi) : '';
+            document.getElementById('fCoverUrl').value = '';
+
+            var preview = document.getElementById('coverPreview');
+            if (book && book.img) {
+                preview.innerHTML = '<img src="' + LR.escapeHtml(book.img) + '" alt="">';
+                if (book.img.indexOf('data:') === 0) coverData = book.img;
+                else document.getElementById('fCoverUrl').value = book.img;
+            } else {
+                preview.innerHTML = '<i class="fas fa-image"></i>';
+            }
+
+            document.getElementById('formPanel').classList.add('open');
+            document.getElementById('formPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function closeForm() {
+            document.getElementById('formPanel').classList.remove('open');
+            editingId = null; coverData = '';
+        }
+
+        function saveBook() {
+            var judul = document.getElementById('fJudul').value.trim();
+            var genre = document.getElementById('fGenre').value;
+            var sinopsis = document.getElementById('fSinopsis').value.trim();
+            var isiPlain = document.getElementById('fIsi').value.trim();
+            var urlVal = document.getElementById('fCoverUrl').value.trim();
+            var img = coverData || urlVal || '';
+
+            if (!judul) { showToast('Judul tidak boleh kosong'); return; }
+            if (!sinopsis) { showToast('Sinopsis tidak boleh kosong'); return; }
+            if (!isiPlain) { showToast('Isi cerita tidak boleh kosong'); return; }
+
+            var isiHtml = plainToHtml(isiPlain);
+
+            if (editingId) {
+                LR.updateBook(editingId, { judul: judul, genre: genre, img: img, sinopsis: sinopsis, isi: isiHtml });
+                showToast('Perubahan tersimpan');
+            } else {
+                LR.addBook({
+                    judul: judul, genre: genre, img: img, sinopsis: sinopsis, isi: isiHtml,
+                    penulis: user.fullname, authorEmail: user.email
+                });
+                showToast('Buku berhasil diterbitkan!');
+            }
+            closeForm();
+            renderAll();
+        }
+
+        /* util konversi isi <-> teks polos */
+        function plainToHtml(text) {
+            return text.split(/\n+/).map(function (line) {
+                line = line.trim();
+                return line ? '<p>' + LR.escapeHtml(line) + '</p>' : '';
+            }).filter(Boolean).join('');
+        }
+        function htmlToPlain(html) {
+            if (!html) return '';
+            return html
+                .replace(/<\/p>/gi, '\n\n')
+                .replace(/<br\s*\/?>/gi, '\n')
+                .replace(/<[^>]+>/g, '')
+                .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+                .trim();
+        }
+
+        function editBook(id) {
+            var b = LR.getBook(id);
+            if (b) openForm(b);
+        }
+
+        function deleteBook(id) {
+            var b = LR.getBook(id);
+            if (b) {
+                if (confirm('Apakah Anda yakin ingin menghapus buku "' + b.judul + '"?')) {
+                    LR.deleteBook(id);
+                    showToast('Buku berhasil dihapus');
+                    renderAll();
+                }
+            }
+        }
+
+        function doLogout() { LR.logout(); window.location.href = 'index.html'; }
+
+        var toastTimer;
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            t.innerText = msg; t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+        }
+    </script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>

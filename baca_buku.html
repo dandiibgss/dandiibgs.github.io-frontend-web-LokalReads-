@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membaca - LokalReads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Anti-Bentrokan Bootstrap */
+        a {
+            text-decoration: none !important;
+            color: inherit;
+        }
+        a:hover {
+            color: inherit;
+        }
+        @font-face {
+            font-family: 'PP Writer';
+            src: url('asset/PPWriter-Bold.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Medium.otf') format('opentype');
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Bold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: url('asset/SF Pro Display/SF-Pro-Display-Black.otf') format('opentype');
+            font-weight: 900;
+            font-style: normal;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #FDFBF7 !important;
+            /* Warna kertas lama agar mata nyaman */
+            color: #1A1A1A;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+            line-height: 1.8;
+        }
+
+        nav {
+            padding: 15px 8%;
+            background: #FFFFFF;
+            border-bottom: 1px solid #EEE;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'SF Pro Display', sans-serif;
+            font-weight: 900;
+            text-decoration: none;
+            color: #1A1A1A;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            margin-left: -20px;
+        }
+
+        .btn-back {
+            text-decoration: none;
+            color: #4B5563;
+            font-family: 'SF Pro Display', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            color: #000;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 60px auto;
+            padding: 0 25px;
+        }
+
+        .judul-cerpen {
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .penulis-cerpen {
+            font-family: 'SF Pro Display', sans-serif;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .isi-cerita {
+            font-size: 20px;
+            text-align: justify;
+            color: #2D2D2D;
+        }
+
+        .isi-cerita p {
+            margin-bottom: 25px;
+        }
+
+        /* Penanda akhir cerita */
+        .the-end {
+            text-align: center;
+            margin: 80px 0;
+            font-family: 'SF Pro Display', sans-serif;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #CCC;
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                margin-left: 0;
+            }
+
+            .container {
+                margin: 30px auto;
+                padding: 0 15px;
+            }
+
+            .judul-cerpen {
+                font-size: 28px;
+                margin-bottom: 8px;
+            }
+
+            .penulis-cerpen {
+                margin-bottom: 30px;
+            }
+
+            .isi-cerita {
+                font-size: 17px;
+                line-height: 1.7;
+            }
+
+            .the-end {
+                margin: 50px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="asset/lokalreads_horizontal_logo_black.png" alt="LokalReads"
+                style="height: 32px; object-fit: contain;">
+        </a>
+        <a href="#" id="backLink" class="btn-back"><i class="fas fa-arrow-left"></i> KEMBALI</a>
+    </nav>
+
+    <div class="container">
+        <h1 class="judul-cerpen" id="judulCerpen">-</h1>
+        <p class="penulis-cerpen" id="penulisCerpen" onclick="showAuthorProfileModal()" title="Klik untuk lihat profil penulis">Oleh -</p>
+
+        <div class="isi-cerita" id="isiCerita">
+            <!-- Isi cerita akan di-render di sini -->
+        </div>
+
+        <div class="the-end" id="endLabel">SELESAI</div>
+    </div>
+
+    <script src="lokalreads.js"></script>
+    <script>
+        // Database Cerita Lokal
+        const databaseCerita = {
+            "Keputusan Vero": {
+                judul: "Keputusan Vero",
+                penulis: "Ajen Angelina",
+                isi: `
+                    <p>Vero menggerus tumitnya dengan batu gosok, menekan sekuat tenaga agar kulit-kulit kasar yang pecah itu kembali halus, atau bila perlu, lenyap tak berbekas. Biasanya ia tak pernah peduli, tetapi Sabtu lalu Frans bilang bagian paling seksi dari perempuan Manggarai adalah tumit mereka.</p>
+                    <p>Kalimat itu menyusup ke dalam tidurnya, menghantui sejak semalam. Bahkan saat ia terbangun dan mengganti popok Endé Bina pagi tadi, gema suara Frans bukannya mereda, malah berdengung makin kencang. Begitu kencang hingga aroma pesing yang menyengat seolah tak tercium oleh hidungnya.</p>
+                    <p>Ia berhenti menggosok tumitnya. Tangannya gemetar sesaat sebelum melempar batu gosok itu ke lantai kamar mandi, mengeluarkan bunyi dentum yang cukup keras. Tiga tahun lalu suaminya, Nadus, merantau ke Kalimantan, meninggalkannya terikat pada mertua yang lumpuh bagian kanan akibat stroke sejak lima tahun lalu. Sejak Nadus pergi, baru kali ini ia tidak segera menepis kata-kata seorang lelaki.</p>
+                    <p>Ia buru-buru menyudahi mandinya. Begitu melangkah keluar, matahari bulan Mei yang garang langsung menyergap. Jarak pendek dari kamar mandi ke pintu rumah cukup untuk membuat kulitnya yang basah dingin berubah lengket.</p>
+                    <p>Di dalam kamar, ia menggosokkan tawas ke ketiak—keras dan lama—seraya menatap pantulan tubuh polos miliknya di cermin lemari. Buah dadanya menggantung bagai mangga ranum yang jika tak dipetik akan diincar kalong buah. Tubuhnya melekuk sempurna dengan perut rata.</p>
+                    <p>“Andaikan aku dan Frans bertemu sepuluh tahun lalu, mungkin ceritanya berbeda,” desahnya.</p>
+                    <p>Ia menepis pikiran itu dan segera mengenakan daster. Ia merapikan rambut sebelum keluar menuju ruang tengah. Cahaya matahari menerobos masuk melalui pintu depan dan jendela yang terbuka. Jam di dinding ruang tamu menunjukkan pukul dua siang. Ia berdiri cukup lama memandang jam itu dan baru beranjak ketika mendengar erangan dari kamar di bagian ujung kanan, dekat dapur.</p>
+                    <p>Di kamar itu, Endé Bina terkapar lemah di ranjang beralaskan perlak, tanpa kelambu. Tubuhnya kurus, seolah-olah tak pernah ada lemak di sana. Aroma minyak urut yang menusuk bercampur dengan pesing samar-samar menguar. Cahaya matahari dari jendela kamar tak mampu mengusir suram di ruangan itu.</p>
+                    <p>“Endé, ada apa?”</p>
+                    <p>Perempuan itu terus mengerang, matanya tertutup. Vero mengecek sarung dan mendapati popok perempuan itu kering. Mungkin ia mimpi buruk, batin Vero.</p>
+                    <p>“Vero… Vero… di mana Nadus?”</p>
+                    <p>Perempuan tua di hadapannya terlihat makin menyedihkan. Akhir-akhir ini ia sering mencari anak bungsu kesayangannya itu, seolah anaknya tak pernah berpamitan padanya tiga tahun lalu. Sebulan ini mertuanya lebih banyak tidur, padahal sebelumnya ia selalu bisa duduk di tempat tidur meski lemah.</p>
+                    <p>Vero berdiri lama di sisi ranjang, tanpa tahu di mana harus meletakkan tangannya.</p>
+                    <p>Sepuluh tahun lalu saat ia dan suaminya menikah, mertuanya itu masih baik-baik saja: cekatan menanam talas di kebun samping rumah, terampil menganyam tikar di bale-bale, dan berapi-api menceritakan banyak hal pada Vero. Ia perempuan tua yang kuat, sendirian menghidupi tiga orang anaknya sebagai penganyam tikar. Meski ia tak pernah bisa membaca, ketiga anak laki-lakinya lulus SMA dan telah merantau mendapat kerja baik di luar kampung.</p>
+                    <p>Endé Bina memiliki aura tenang dan penuh kasih. Vero masih ingat bagaimana perempuan itu menerima saja ketika anaknya memperkenalkan istri yang masih remaja ingusan dan tak jelas asal-usulnya sepuluh tahun lalu. Selain itu selama sepuluh tahun menikah, saat menantunya itu tak kunjung hamil, mertuanya selalu menjadi tameng ketika warga kampung bergunjing. Setiap kali melihat tubuh itu terbaring, napas Vero terasa pendek dan berat.</p>
+                    <p>“Vero… Di mana Nadus?” Perempuan tua itu kembali bertanya lirih. Kelopak matanya yang keriput perlahan terbuka. Bola matanya yang keruh menatap Vero dengan tatapan nanar.</p>
+                    <p>“Nadus sebentar lagi akan datang, Ende,” jawab Vero, sengaja mengalihkan pandangan ke arah jendela.</p>
+                    <p>Ende Bina tidak menjawab. Ia menutup kembali matanya. “Kalau ia datang, bangunkan saya.”</p>
+                    <p>Vero mengangguk, mematung di sudut tempat tidur, dan baru keluar setelah mertuanya tertidur pulas.</p>
+                    <p>Ia menuju dapur, menyalakan tungku dan menjerang air. Pikirannya melayang pada Frans, kepala tukang yang mengerjakan rumah Marta, tetangga yang berjarak tiga rumah dari tempatnya. Laki-laki itu semacam oase yang muncul di hidupnya yang kering. Frans muncul tiga bulan lalu di depan rumahnya, meminta labu siam di kebun belakang untuk lauk ia dan anak buahnya.</p>
+                    <p>“Marta sudah menyediakan sayur yang banyak untuk kami, tetapi nafsu makan anak buah saya seperti babi,” ujarnya malu-malu saat itu.</p>
+                    <p>Laki-laki itu berusia akhir 30-an. Badannya besar dan berotot. Tangannya kasar dan kuat. Ia punya wajah seperti banyak lelaki Manggarai: hitam, pesek, dan berambut keriting. Hanya saja, senyumnya membuat matanya bersinar.</p>
+                    <p>Vero hanya tersenyum dan menyerahkan seember labu siam. Keesokan harinya laki-laki itu kembali. Kali ini membawa ikan kering dari kampungnya sebagai ucapan terima kasih atas labu yang ia berikan. Setelah itu, setiap malam Minggu Frans akan bertamu, biasanya bersama salah satu anak buahnya.</p>
+                    <p>Namun Sabtu lalu—tepat tujuh hari yang lalu—laki-laki itu datang sendiri. Mereka berdua duduk di dapur. Vero merebus sayur untuk makan malam Endé Bina sebelum mertuanya itu minum obat wajib dari Puskesmas. Frans duduk di sampingnya. Mereka berdua menghadap tungku api.</p>
+                    <p>“Pekerjaan kami selesai minggu ini dan minggu depan aku akan pulang, Vero,” ujar Frans. Nada suaranya berubah serius. Padahal sebelumnya mereka membahas hal-hal remeh, seperti lelucon tentang tumit perempuan Manggarai itu.</p>
+                    <p>Vero yang sedang memasukkan kayu bakar ke dalam tungku memandangnya sekilas. Laki-laki itu berdehem sebelum melanjutkan.</p>
+                    <p>“Selama ini aku selalu datang ke rumahmu membawa seorang anak buahku karena aku menghargaimu, Vero.” Ia menatap mata Vero lekat-lekat. “Marta selalu bilang kau perempuan baik-baik dan aku tak boleh macam-macam.”</p>
+                    <p>Ia seketika terdiam. Vero merasakan dadanya bergemuruh.</p>
+                    <p>“Aku tidak mungkin main-main tentangmu, tentang kita. Waktu melihatmu pertama kali, aku langsung jatuh hati. Karena itu, Vero… kaburlah bersamaku.”</p>
+                    <p>Bunyi panci yang bergoyang karena gelembung air mendidih menyentak Vero kembali ke dapur. Dadanya terasa sesak. Ia menelan ludah berkali-kali.</p>
+                    <p>Ia, kalau boleh jujur, sudah lupa pada sentuhan lelaki dan sibuk merawat Endé Bina selama ini. Selain itu suaminya, Nadus, semakin menjauh dan mulai jarang ia pikirkan. Selama tiga bulan ini ia selalu menantikan kunjungan Frans di hari Sabtu. Selama tujuh hari ini ia terus memikirkan kunjungan terakhir. Apakah Frans serius ingin mengajaknya kabur?</p>
+                    <p>Wajah Marta muncul di benaknya, lengkap dengan nada suaranya dua hari lalu.</p>
+                    <p>“Frans serius denganmu, Vero. Ia laki-laki baik. Sudah dua tahun ia menduda.” Mereka duduk di ruang tengah. Awalnya Vero merasa aneh mengapa perempuan itu harus datang menjelaskan tentang Frans yang hanyalah tukang itu.</p>
+                    <p>“Frans itu sepupuku. Kami sekampung. Di kampung ia terkenal baik, tak pernah macam-macam. Saya jamin,” ujar Marta. Vero memandangi Marta waktu itu tanpa benar-benar tahu harus percaya atau tidak.</p>
+                    <p>“Frans itu laki-laki yang tak pernah melakukan sesuatu sembarangan, apalagi mengajak perempuan kawin lari. Ia begitu karena kamu. Ia serius. Kau mau ikut bersamanya, kan?”</p>
+                    <p>“Entahlah, Marta,” desahnya saat itu.</p>
+                    <p>“Buat apa kau tinggal di rumah ini? Anak-anak kandung Endé Bina saja tak ada yang mau merawat. Sudah lima tahun kau hidup sengsara seperti ini, Vero. Kau masih muda, jangan layu dan menjadi tua di tempat ini!” Marta terus mencerca, seolah menyiram bensin pada api yang baru menyala.</p>
+                    <p>Vero hanya mendesah dan duduk di kursi, meminta Marta menurunkan volume suaranya. “Endé Bina itu sudah tak sadar lagi, Vero,” bisik Marta tajam. “Dia bahkan tak tahu ketiga anaknya meninggalkan dia padamu yang orang asing.”</p>
+                    <p>Ende Bina bukanlah orang asing, Vero ingin mengungkapkan itu tetapi urung melihat mata Marta yang berkilat-kilat.</p>
+                    <p>Marta mendekatkan wajahnya, menatap Vero lekat. “Apa yang kau takutkan? Frans itu duda, anaknya tiga. Dia tidak mengharapkan anak lagi darimu yang mandul. Jika itu yang kau takutkan.”</p>
+                    <p>Dada Vero teriris mendengar kata mandul. Sudah lama sekali ia tak mendengar orang lain mengatakan itu terang-terangan. Dulu, Endé Bina memarahi siapa saja yang mengatainya mandul.</p>
+                    <p>“Menantuku tetap perempuan meski belum hamil. Kalian urus saja menantu kalian yang kurang ajar,” amuk mertuanya suatu kali pada sekelompok perempuan tua yang menggunjing namanya. Sejak itu, tak ada yang berani menyebut mandul di depan ia dan Ende Bina.</p>
+                    <p>“Lagipula,” sambung Marta, suaranya melunak tetapi penuh racun, “apa kau yakin Nadus di Kalimantan sana tak punya istri lagi? Laki-laki itu butuh pelayanan, Vero. Tiga tahun dia tidak pulang, apa kau percaya dia tidur sendirian?”</p>
+                    <p>Ia ingin menjawab bahwa ia tak sendirian. Nadus suaminya itu selalu menelepon dan mengirim uang yang cukup untuk beli popok Ende Bina dan keperluan lain. Dua anak laki-laki Ende Bina yang merantau ke Papua dan bekerja di sana juga tidak lepas tangan; sesekali mereka menelepon dan tidak pernah absen mengirim uang setiap bulan. Uang untuk popok, obat, beras, dan bahkan untuk dirinya sendiri selalu ada. Ia tidak kekurangan meski, setiap Sabtu sore, ia selalu mendamba langkah kaki Frans di halaman.</p>
+                    <p>“Kasihan Endé Bina, Mar” ujarnya lemah.</p>
+                    <p>“Lalu bagaimana dengan kau?” sergah Marta cepat. “Apa kau tidak kasihan dengan dirimu sendiri?”</p>
+                    <p>Suara tutupan panci kembali terdengar, kali ini lebih keras. Ia cepat-cepat mengeluarkan beberapa kayu dari tungku, lalu mengisi termos. Suara air yang memenuhi termos terdengar nyaring di telinganya, mengingatkannya pada ucapan terakhir Frans, Sabtu lalu di dapur ini, sebelum pergi.</p>
+                    <p>“Vero, aku menunggu jawabanmu. Sabtu depan, datanglah ke rumah Marta. Kalau kau muncul sebelum pukul tujuh malam, artinya kau setuju untuk pulang bersamaku ke kampungku,” ujar laki-laki itu sebelum mencium keningnya. “Aku janji akan memberikanmu rumah yang lebih baik dari ini. Rumah bersama anak-anakku yang membutuhkan Ibu.”</p>
+                    <p>Lamunannya buyar saat suara erangan Endé Bina kembali terdengar. Vero menepuk kedua pipinya sendiri untuk menyadarkan diri, lalu melangkah menuju kamar mertuanya. Jam dinding di ruang tengah menunjukkan pukul lima sore.</p>
+                    <p>Aroma busuk menyengat menguar memenuhi udara. Dengan sigap, Vero kembali ke dapur mengambil ember dan sabun. Ia mengganti popok sekali pakai yang penuh kotoran dan menyeka seluruh bokong perempuan itu. Mata Ende Bina terbuka saat Vero sedang menyeka bagian belakang tubuhnya.</p>
+                    <p>“Vero, pasti bau sekali kotoranku itu.”</p>
+                    <p>Tanpa sadar Vero tertawa kecil. “Namanya juga kotoran, Endé. Mana ada yang wangi.”</p>
+                    <p>Ia melanjutkan pekerjaannya, membungkus popok kotor itu ke dalam plastik. Ia kembali ke kamar Endé Bina dengan kain lap, sabun, dan ember berisi air hangat, lalu melap seluruh tubuh mertuanya dengan pelan sebelum kemudian memasang popok baru.</p>
+                    <p>“Vero… Kasihan sekali kau, Nak.” Tiba-tiba perempuan tua itu menangis. Ia meraih tangan Vero dan meremasnya dengan sisa tenaganya yang lemah. Sorot matanya mendadak bening, seolah-olah seluruh kabut pikunnya luruh saat itu juga.</p>
+                    <p>“Kau boleh pergi, Vero. Kau masih muda dan tidak layak membusuk bersamaku di sini. Pergilah bersama Frans itu.”</p>
+                    <p>Vero terkesiap. Rupanya Ende Bina mendengar percakapannya dengan Marta beberapa hari lalu. Ia tidak mampu menjawab. Lidahnya kelu.</p>
+                    <p>“Akan lebih baik kalau kau pergi daripada membersihkan kotoranku setiap hari.”</p>
+                    <p>Vero terdiam. Matanya berkaca-kaca. Pikirannya terlempar ke enam tahun lalu, setahun sebelum mertuanya terkena stroke. Saat itu akhirnya ia hamil, tetapi mengalami keguguran ketika usia kandungan baru dua bulan. Ende Bina dengan tubuh tua dan lelahnya yang mengurusinya; menyuapkan ia makan, membersihkan gumpalan darah yang keluar dari tubuhnya yang tak berdaya, dan mencuci bersih seprai serta bajunya yang amis. Tak sekali pun keluar nada jijik atau marah dari mulutnya. Ia membelai kepala Vero dan membisikkan kata-kata pengharapan, bahwa semua akan baik-baik saja, ia tidak sendiri. Itu adalah hal yang hanya mereka berdua ketahui.</p>
+                    <p>Ia juga masih ingat di tahun kelima pernikahan mereka, saat Nadus memarahinya dan memaki-makinya mandul, perempuan tua dengan tubuh ringkih itu memukul anak kandung kesayangannya dengan sapu, membuat suaminya tak pernah lagi macam-macam.</p>
+                    <p>Bahkan seminggu setelah Nadus ke Kalimantan, mertuanya itu memanggilnya dengan suara bergetar. Ia menyuruh Vero membuka laci lemari paling bawah dan mengambil bungkusan di balik tumpukan baju lama. Ada uang sepuluh juta rupiah di sana—hasil tabungan anyaman tikar selama bertahun-tahun.</p>
+                    <p>“Pergilah, Vero. Biarkan anak-anakku membayar seseorang untuk merawatku. Pergilah,” katanya waktu itu, memaksa Vero menerima uang itu untuk memulai hidup baru.</p>
+                    <p>Namun Vero tak pernah mengambil uang itu. Ia tak tahu harus ke mana. Baginya, Endé Bina adalah rumahnya.</p>
+                    <p>Tanpa sadar air mata Vero menetes, jatuh di atas tangan keriput yang sedang menggenggam tangannya erat. Ia menoleh ke arah jendela kamar yang mulai gelap. Di luar sana, jalan menuju rumah Marta dan pelukan Frans terbentang terbuka. Namun, Vero merasakan tumitnya justru mencengkeram erat lantai semen yang dingin di rumah ini.</p>
+                    <p>“Ende, saya siapkan makan, ya,” ujar Vero seraya berdiri, mengalihkan pembicaraan.</p>
+                    <p>Ende Bina tidak menjawab, hanya menatapnya dengan mata berkaca-kaca. Vero melangkah cepat keluar dan mematung di ruang tengah. Jam dinding di atas kepalanya menunjukkan tepat pukul tujuh lewat lima. [*]</p>
+                `
+            },
+            "Singa Putih": {
+                judul: "Singa Putih",
+                penulis: "Baron Yudo Negoro",
+                isi: `
+                    <p>Ini ketiga kalinya. Dua tahun silam–kali pertama, Bapak membicarakan singa putih lewat telepon dan kemungkinan datangnya malaikat maut yang, menurut keyakinannya sendiri, bersiap untuk menjemputnya. Aku telah lama menganggap singa putih dongeng belaka. Tapi, karena Bapak sering batuk sepanjang percakapan, aku memutuskan mengambil cuti dan membawa anak-istri pulang ke kampung, yang ternyata hanya untuk mendapati Bapakku kangen cucu.</p>
+                    <p>Kini, yang menelepon bukan Bapak, melainkan Ridho, kawan sekampungku dulu. Ia mengatakan bahwa akhir-akhir ini Bapak menjalani hari-harinya dengan menyedihkan, terbaring di kasur saja, tubuhnya menyusut sampai menyerupai batang lidi. Aku menanggapi sebagaimana orang menanggapi hujan mendadak.</p>
+                    <p>“Kau tahu, yang kedua kalinya, dia cuma mau mengajakku memancing di tambak. Percayalah, paling cuma demam biasa. Kemungkinan terburuk, tipes,” kataku.</p>
+                    <p>“Katanya, aku yang harus bicara padamu. Suaramu tak ramah kalau dia yang bicara. Kau tahu, dia melihat singa putih. Seminggu sebelumnya!” kata Ridho.</p>
+                    <p>“Masih saja membicarakan itu,” kataku. “Baiklah. Akan kubicarakan dulu dengan Ratri.”</p>
+                    <p>Setelah percakapan terputus, aku melangkah ke kamar putriku, Alin, dan mengintip sejenak. Ratri istriku telah memeluknya dalam tidur yang damai. Aku menutup pintu perlahan dan menuju sofa, berniat melanjutkan serial televisi yang telah kutetapkan akan kutamatkan malam itu. Namun niat itu batal sebab aku tak bisa berhenti memikirkan Bapak.</p>
+                    <p>“Ah!” gerutuku, sambil mematikan televisi dan melemparkan remot ke sudut sofa.</p>
+                    <p>Setelah sekian lama, mengapa omong kosong itu kembali diungkit, pikirku, sambil menggaruk kepala. “Singa putih,” kataku pada diri sendiri, lalu terkekeh singkat.</p>
+                    <p style="text-align: center;">***</p>
+                    <p>Kau tahu, Pembaca Budiman, sejak Ibuku meninggal, aku dan Bapak hidup berdua di sebuah kampung di Jawa Timur, di rumah berdinding bata yang berdiri tak jauh dari sungai, hutan, dan perbukitan. Bapak, yang mulanya dikenal sebagai pengajar ngaji, pengisi khotbah Jumat, dan pengumandang azan, lambat laun mengubah ruang tamu kami menjadi tempat orang-orang menumpahkan keluh kesah. Mereka pulang dengan lega, meninggalkan “amplop”. Dengan cara itulah ia menghidupi kami.</p>
+                    <p>Semua bermula dari pengakuannya yang menggemparkan kampung: bahwa ia, dengan mata kepala sendiri, telah melihat sosok singa putih di hutan. Tak seorang pun tahu, apakah makhluk itu tak kasat mata, atau singa sungguhan dengan taring tajam dan selera yang tak pilih-pilih, termasuk mengoyak daging manusia.</p>
+                    <p>“Tidak berbahaya. Yang penting, kita sama-sama saling jaga,” kata Bapak suatu malam, kepada bapak-bapak yang dituakan di kampung kami.</p>
+                    <p>Usiaku enam tahun kala itu, dan aku mengintip dari balik jendela saat mereka duduk bersila di teras rumah, beralaskan tikar, menyimak Bapak dengan keseriusan rapat negara. Dan maksud dari “saling menjaga”, kupahami di kemudian hari.</p>
+                    <p>Aku ingat duduk di bak pikap, menjaga tunas-tunas pohon yang diborong dari kota, sementara Bapak menyetir. Setibanya di lapangan kampung, warga menyalami dan mencium tangannya, menurunkan tunas-tunas itu, lalu berbondong-bondong membawanya ke hutan. Bapak memanjatkan doa, mereka mengamini, dan bersama-sama menanam pohon-pohon muda itu. Pada minggu-minggu tertentu, mereka bahkan mendaki bukit, membersihkan reruntuhan lumpur dan bebatuan dari sungai kecil.</p>
+                    <p>Kami pernah menyusuri hutan berdua. Kami memunguti ranting-ranting dan dahan mati, memindahkannya ke jalan setapak. Rasa heran mendorongku bertanya, untuk apa semua ini dilakukan.</p>
+                    <p>“Dia tidak suka jejak manusia,” kata Bapak. “Kau lihat saja. Air bersih, udara segar, tanah subur. Bahkan sumur kita tak pernah kering. Kau kira itu ulah siapa? Ya, singa putih. Karena itu kita harus jaga rumahnya,” sambungnya.</p>
+                    <p style="text-align: center;">***</p>
+                    <p>Aku percaya sepenuhnya. Bagaimanapun, usiaku baru delapan tahun. Pengetahuan apa yang kumiliki untuk menolak keyakinan itu? Namun, Pembaca Budiman, izinkan aku mengatakan bahwa luka pertamaku justru tumbuh dari kepercayaan kenaifan itu.</p>
+                    <p>Sekolahku terletak jauh dari kampung, harus menyusuri sungai hingga ke jalan utama kota, lalu menaiki bus ke utara. Aku satu-satunya murid yang menempuh perjalanan serepot itu. Pada suatu hari, ejekan teman-temanku tak lagi tertuju pada sepatu butut, seragam lusuh, atau tasku yang ditambal kain. Dan semua bermula dari satu pertanyaan dari guru kami. “Siapa pahlawanmu?”</p>
+                    <p>Sementara murid lain menyebut ayah, ibu, atau kerabat dekat mereka, aku menanti giliranku dengan harapan yang ternyata terlampau tinggi. Aku berniat menyebut singa putih. Dalam imajiku, aku berdiri, menerangkan alasannya, dan melihat mereka yang selama ini mengejekku mengangguk-angguk kagum. Namun, semua tak seperti yang kubayangkan.</p>
+                    <p>Tawa mereka meledak. Beberapa terpingkal sampai terjungkal ke belakang, sebagian melonjak-lonjak di bangku, memukul-mukul meja seperti kera liar, dan remasan kertas beterbangan ke arahku. Seorang murid bahkan beringsut hanya untuk mendorong kepalaku dari belakang.</p>
+                    <p>“Kembali ke tempat dudukmu!” teriak guruku.</p>
+                    <p>Di bangku, duduk sendiri, aku menahan diri untuk tidak menjatuhkan martabatku dengan meneteskan air mata. Namun, Pembaca Budiman, dadaku bergetar aneh. Seperti kepanasan. Seolah-olah ada api di dalamnya. Dan saat aku mengira mereka telah selesai denganku, mendadak seorang murid semacam menyadari siapa aku.</p>
+                    <p>“Oh, aku tahu. Kau anaknya Pak Karmin, bukan?”</p>
+                    <p>“Pak Karmin?” Murid lain mengernyit.</p>
+                    <p>“Karmin Kampung Waru!”</p>
+                    <p>“Yang dukun itu?”</p>
+                    <p>Sejak itulah mereka memanggilku “Karmin”, “Dukun”, atau “Singa Putih”.</p>
+                    <p>Jika kau bernasib lebih mujur, semisal anak orang berada, kau mungkin merengek ke bapakmu, memohon dipindahkan ke sekolah lain. Tapi, aku bukanlah kau. Aku anak dari Pak Karmin. Sialnya lagi, setelah enam tahun kulalui dengan murung dan terasing, aku kembali bertemu bocah-bocah yang sama di SMP dan SMA. Mereka menyebarkan kisahku, menertawakannya lagi dan lagi sambil bergurau, “Hati-Hati, dia ahli santet.” Atau, “Hati-Hati, dia ahli pelet.”</p>
+                    <p>Pernah suatu ketika kesabaranku habis. Mereka mencemoohku di kantin. Tanpa pertimbangan, kulemparkan sambal soto, sehingga seorang di antaranya menjerit-jerit karena matanya bagai terbakar, dan merasa perlu membenamkan kepala ke ember penuh air. Seorang memukulku, aku membalas, kami pun berguling-guling di samping kantin, di tanah berlumpur yang lengket dan bau.</p>
+                    <p>Aku pulang membawa oleh-oleh berupa sepucuk amplop–Bapak dipanggil karena pertengkaranku. Aku terpelanting oleh tamparannya.</p>
+                    <p>“Memalukan,” katanya sambil meremas surat itu.</p>
+                    <p>Darahku mendidih.</p>
+                    <p>Mungkin karena aku beranjak dewasa. Mungkin karena aku terlampau lama menelan semuanya sendiri. Leherku menegang, rahangku mengeras, dan otot-otot tanganku mengencang.</p>
+                    <p>“Bapak yang memalukan. Yang Bapak lakukan, semua omong kosong itu, semua memalukan,” kataku. Aku lalu menutup pintu, tak membiarkan seluruh dunia masuk ke kamarku.</p>
+                    <p>Sore berikutnya, Bapak menghampiriku. Ia meminta maaf dan mengatakan bahwa ia tahu apa yang menimpaku selama ini; seorang tetangga, katanya, memiliki keponakan yang selalu satu sekolah denganku.</p>
+                    <p>“Ada sedikit tabungan,” katanya dengan lembut dan sorot mata redup. “Setelah SMA, kau bisa ke Surabaya.”</p>
+                    <p>Aku merasakan penyesalan mendalam darinya. Namun, tahun-tahun berat yang kulalui rasanya terlampau mahal untuk ditebus dengan cara seperti itu.</p>
+                    <p>Memang, aku merasa lega saat kuliah di Surabaya. Setimon sekali aku pulang, itu pun dua hari saat Lebaran. Setelah lulus, aku bekerja di perusahaan swasta, bertemu Ratri, dan menjalin hubungan serius. Namun, ketika Bapak bertemu orang tua Ratri di Surabaya dan membicarakan singa putih, aku meninggalkan meja makan tanpa berkata-kata karena merasa sangat malu. Ratri menyusulku.</p>
+                    <p>“Kau mestinya bangga, Raf,” kata Ratri.</p>
+                    <p>“Ya. Bangga. Tentu saja aku bangga,” kataku. “Bapakku pembohong dan aku sangat bangga!”</p>
+                    <p>Itulah luka yang kuniatkan sebagai luka terakhirku.</p>
+                    <p style="text-align: center;">***</p>
+                    <p>Hari-hari berikutnya, Ridho kerap menelepon, tetapi tak satu pun kujawab. Aku tahu maksudnya, membicarakan kondisi Bapak, memintaku pulang hanya untuk mendapati urusan-urusan remeh. Hingga suatu sore, sepulang kerja, kudapati Ratri duduk di bangku kayu teras dengan tangan tersilang. Ia menatapku seperti menatap seorang musuh.</p>
+                    <p>“Aku ditelepon,” katanya. “Kita harus pulang kampung.”</p>
+                    <p>“Oh.”</p>
+                    <p>“Bapak kritis. Kau bahkan tak tanya siapa yang meneleponku.”</p>
+                    <p>“Ridho, bukan.”</p>
+                    <p>“Dokter!”</p>
+                    <p>“Itu Ridho.</p>
+                    <p>Ratri bangkit dengan kasar hingga kaki bangku berderit. “Kalau kau tak mau pulang kampung, biar aku dan Alin sendiri.”</p>
+                    <p>Aku memanggilnya, tetapi ia telah masuk ke rumah. Maka, tanpa pilihan lain, aku menuruti maunya. Kami pun berkemas-kemas, berangkat malam itu juga. Sepanjang perjalanan, Ratri diam dalam kemarahannya, sementara Alin bermain ponsel di bangku tengah.</p>
+                    <p style="text-align: center;">***</p>
+                    <p>“Ratri, tunggu,” kataku, tetapi ia terus melangkah masuk ke rumah.</p>
+                    <p>Tentu saja, aku tak punya pilihan selain menuruti Ratri. Kami pun berkemas-kemas, kemudian berangkat malam itu juga dengan mobil.</p>
+                    <p>Semestinya aku berhak marah, tetapi Ratri tampak sangat geram. Sepanjang perjalanan, ia membisu dalam kemarahannya, sementara Alin hanya bermain ponsel di bangku tengah.</p>
+                    <p>Menjelang pagi, saat kami baru sampai di Situbondo, kabar duka datang: Bapak telah tiada dan akan dimakamkan keesokan harinya. Ratri menangis terisak, berkali-kali mengusap air mata, menggumamkan kalimat, “Kau akan dihantui penyesalan.”</p>
+                    <p>Aku menunggu datangnya kesedihan. Namun yang muncul hanyalah perasaan asing dari bagian dalam diriku yang telah lama padam. Ratri tak mungkin mengerti bagaimana menjadi orang yang hidup tanpa ibu, menanggung kebohongan bapaknya, tersisih, dijauhi, dan dikucilkan hanya karena siapa bapaknya.</p>
+                    <p>Kami mengikuti seluruh prosesi pemakaman. Aku ikut menggotong keranda, sebagaimana Ratri minta, dan berniat pergi sebelum malam. Angin membuat bambu berderap dan dedaunan berguguran, sementara kerudung putih Ratri berkibar. Ia berjongkok dan menabur bunga, sementara aku hanya berdiri di samping Alin yang menatap entah ke mana.</p>
+                    <p>Usia Alin sembilan tahun, tumbuh dengan kecantikan paras seperti ibunya. Dan ia terus menatap entah ke mana.</p>
+                    <p>“Kenapa, Sayang?” tanyaku sambil berjongkok.</p>
+                    <p>Lalu, Alin mengangkat tangan dan menunjuk jauh ke arah hutan. Aku pun mengernyit, melihat sesuatu.</p>
+                    <p>“Ada singa putih, Pa,” katanya. [*]</p>
+                `
+            },
+            "Sulis dalam Tiga Babak": {
+                judul: "Sulis dalam Tiga Babak",
+                penulis: "Fadilah Karsono",
+                isi: `
+                    <p>Pagi itu, di luar rutinitas memberi makan ayam dan membersihkan kotoran mereka, Sulis mengarahkan mesin cukur yang menyala ke rambut kepala sekolah anaknya. Desing mesin di atas kepala yang tak berdaya memanggil-manggil dan menimbulkan keributan di kantor kecil itu. Salah seorang guru berpakaian olahraga menangkap Sulis dari belakang dan menariknya dengan cepat. Hentakannya membuat kepala sekolah yang sedari tadi diam mengaduh. Tidak jelas, disebabkan pisau mesin cukur mengenai kulit kepalanya atau rambutnya tercabut. Sulis tidak memberontak dan hanya berdiri mematung setelah guru tadi meminta mesin cukur dari tangannya dan mematikannya. Kepala sekolah dengan rambut tercukur acak terdiam seribu bahasa. Kedua matanya menatap Sulis tak percaya.</p>
+                    <p>“Untuk anakku.”</p>
+                    <p>Sulis berkata tajam sebelum berbalik badan dan pergi meninggalkan pria paruh baya yang malang itu. Kepala sekolah mengangkat tangan saat gestur si guru berpakaian olahraga hendak mencegah Sulis pergi. “Biarkan,” katanya sembari mengusap-usap kepalanya, membuang rambut-rambut terpotong yang masih menempel. Guru berpakaian olahraga mengangguk dan mendekat seolah ingin membantu tapi tak tahu harus bagaimana. Guru-guru lain yang sejak tadi berkerumun di luar ruangan, berbisik-bisik satu sama lain, hanya bergeser membuka celah kerumunan dengan sukarela agar Sulis bisa lewat. Tak ada yang berusaha menenangkan, tak ada yang mengajak bicara, Sulis hilang di antara deru motor yang terburu-buru. Para pegawai tampaknya masih belum bisa mencerna apa yang baru saja terjadi. Beberapa orang mulai memasuki ruangan kepala sekolah dan menanyakan keadaan atasan mereka itu, juga apa yang ia butuhkan saat ini.</p>
+                    <p>“Cari tahu siapa dia!”</p>
+                    <p>Seorang guru wanita mendekat dan mengatakan bahwa ia mengetahui siapa gerangan orang yang telah berani mencukur paksa atasannya. Katanya lagi, anak dimaksud ibu tadi adalah satu-satunya siswa yang dihukum cukur plontos oleh kepala sekolah dua hari yang lalu setelah upacara. Sebuah nama disebutkan dan melihat raut wajahnya, memori kepala sekolah tampak sedang berulang dalam kepalanya. Guru tadi juga manambahkan bahwa siswa tersebut sudah tidak masuk sejak dihukum sampai hari ini. Siswa itu meninggalkan sekolah sebelum jam berakhir, kabarnya pulang ke rumah yang jaraknya sekitar 100 meter saja dari sekolah. Kepala sekolah menarik napas panjang dan menghembuskannya perlahan. Matanya terpejam sesaat. Kemudian ia meminta para guru kembali ke ruangan mereka dan tidak usah meributkan apa yang sudah terjadi.</p>
+                    <p>“Sebisa mungkin anak-anak lain jangan sampai tahu, apalagi orang-orang di luar sana. Sekolah kita adalah yang terbaik di sepanjang pantai timur,” katanya. “Dan juga…pinjamkan saya topi. Saya mau ke tukang cukur dulu.”</p>
+                    <p>Kepala sekolah beranjak dari kursinya sembari mengibas-ngibaskan tangan pada kemejanya dan berjalan menuju lorong kantor. Sebagian guru tidak mematuhi perintahnya, mereka memasuki ruangan kepala sekolah berbekal sapu dan kemoceng lalu membersihkan sisa-sisa potongan rambut yang tersebar di lantai, kursi, dan perabot lain. Kepala sekolah sempat berhenti menoleh tapi tidak lama dan melanjutkan berjalan menuju pintu keluar sampai ke parkiran guru dalam diam. Ia menyapa dengan senyum beberapa siswanya yang berpapasan di rute menuju kendaraannya. Setelah sampai di samping sepeda motornya ia mengambil ponsel dari saku celana dan menelepon sebuah nomor. Kepala sekolah berbicara dengan tenang, entah dengan siapa.</p>
+                    <p style="text-align: center;">***</p>
+                    <p style="text-align: center; font-weight: bold;">2</p>
+                    <p>“Betul nama ibu Sulis?”</p>
+                    <p>“Betul.”</p>
+                    <p>“Silakan duduk.”</p>
+                    <p>…..</p>
+                    <p>“Ibu tahu kenapa ibu dipanggil ke sini?”</p>
+                    <p>“Dibawa.”</p>
+                    <p>“Maaf?”</p>
+                    <p>“Dibawa. Bukan dipanggil.”</p>
+                    <p>“Mohon maaf karena ibu tidak kooperatif. Kami terpaksa—”</p>
+                    <p>“Dibawa. Seperti barang…”</p>
+                    <p>“Ibu Sulis, dengan segala hormat, mohon lihat rekaman cctv ini.”</p>
+                    <p>“Saya tahu apa yang saya lakukan.”</p>
+                    <p>“Berarti ibu Sulis mengakui perbuatan ibu?”</p>
+                    <p>“Harus saya jawab?”</p>
+                    <p>“Harus, bu.”</p>
+                    <p>“Dengan segala hormat saya mengakui perbuatan saya sebagaimana sudah sangat jelas terlihat pada rekaman cctv.”</p>
+                    <p>“Kami tidak bermaksud merendahkan…kami wajib memastikan orang yang ada pada rekaman itu adalah ibu.”</p>
+                    <p>“Kenapa baru dilakukan sekarang? Kenapa tidak sebelum anda menangkap dan membawa paksa saya, di hadapan semua orang?”</p>
+                    <p>“Ibu…ibu bisa dipenjara setidaknya enam bulan.”</p>
+                    <p>“Saya akan melaporkan balik. Dengar ya, saya akan laporkan balik!”</p>
+                    <p>“Kenapa tidak ibu jelaskan dulu sekarang? Mengapa ini semua terjadi dan mengapa ibu melakukannya. Saya akan mendengarkan.”</p>
+                    <p>“Anda sudah tahu.”</p>
+                    <p>“Ibu harus mengucapkannya. Ibu tahu kita direkam, kan?”</p>
+                    <p>“Direkam? Kenapa?”</p>
+                    <p>“Kewajiban kami, bu.”</p>
+                    <p>“Kenapa tidak bilang di awal?”</p>
+                    <p>“Ah, maafkan saya. Apakah ibu keberatan kami merekam—?”</p>
+                    <p>“Sudah, sudah.”</p>
+                    <p>“Lalu?”</p>
+                    <p>“Orang itu lebih dulu mencukur anak saya sampai plontos! Siapa dia merasa berhak menyentuh anak saya?”</p>
+                    <p>“Orang itu adalah kepala sekolah anak ibu.”</p>
+                    <p>“Apa itu menjadikan dia boleh mencukur rambut anak kecil yang jelas-jelas telah menolak untuk dicukur? Hanya karena telat satu hari merapikan rambutnya anak saya harus ditertawakan satu sekolahan?”</p>
+                    <p>“Saya paham ibu…”</p>
+                    <p>“Tidak, anda tidak paham. Harusnya yang anda interogasi saat ini adalah orang itu!”</p>
+                    <p>“Tentu ada prosedur yang harus kami lalui…”</p>
+                    <p>“Prosedur anda salah! Saya sudah melapor ke dinas, juga ke kantor ini, sama sekali tidak ada tindak lanjut.”</p>
+                    <p>“IBU!”</p>
+                    <p>…..</p>
+                    <p>“Anda tidak akan pernah bisa…melaporkan orang itu.”</p>
+                    <p>“Saya…saya..”</p>
+                    <p>“Ibu harus kami tahan.”</p>
+                    <p>“Bagaimana dengan anak saya..”</p>
+                    <p>“Anak ibu akan—”</p>
+                    <p>“Berhenti berkata ‘anak ibu’, ‘anak ibu’! Dia juga anak anda!”</p>
+                    <p>……</p>
+                    <p>……</p>
+                    <p>“Sulis…”</p>
+                    <p style="text-align: center;">***</p>
+                    <p style="text-align: center; font-weight: bold;">3</p>
+                    <p>Enam jam setelah ditahan di Polsek, Sulis keluar dengan muka muram. Tidak ada satu petugas pun yang ia sapa. Ia hanya keluar begitu saja setelah mengambill barang-barangnya. Di luar, kepala sekolah tampak menunggunya, berdiri sendiri di halaman Polsek yang temaram. Petang telah datang.</p>
+                    <p>Kepalanya yang plontos terekspos begitu saja di udara yang dingin. Sulis sempat memerhatikan sesaat kemudian menatap mata kepala sekolah yang sudah berada di hadapannya. Katanya, ayo bicara. Yang ditanya hanya diam saja sementara kepala sekolah bergerak menuju mobilnya dan membukakan pintu penumpang sebelah kemudi. Sulis akhirnya juga bergerak mendekat dan mengisyaratkan dengan tangannya agar dibukakan pintu kursi belakang. Kepala sekolah mengiyakan dan tak lama mobilnya telah melaju di jalan besar meninggalkan Kantor Polsek di belakang mereka.</p>
+                    <p>Tak sampai sepuluh menit mereka tiba di sebuah rumah makan. Segera kepala sekolah mengajak Sulis menuju salah satu meja dan mempersilakannya duduk di kursi.</p>
+                    <p>“Saya tidak lapar dan tidak haus,” ucap Sulis sebelum orang di hadapannya berbicara apa-apa.</p>
+                    <p>“Tentu. Setidaknya biarkan saya memesan sesuatu.” Kepala sekolah mengangkat tangannya berusaha menarik perhatian salah seorang pelayan di situ. Sulis hanya diam.</p>
+                    <p>“Saya ingin bicara baik-baik.” Setelah berhasil memesan kepala sekolah membuka lagi pembicaraan mereka.</p>
+                    <p>“Saya tidak ingin. Saya hanya ingin pulang, kasihan anak saya sendiri di rumah. Lagipula saya tidak bawa hape,” jawab Sulis.</p>
+                    <p>“Anak ibu baik-baik saja. Dia bersama ayahnya. Sebelum ke Polsek saya sempat menemuinya.”</p>
+                    <p>“Dia tidak baik-baik saja. Apalagi anda menemuinya.” Sulis kini menatap kepala sekolah, tajam dan marah. “Saya dan ayahnya sudah berpisah karena dia tidak baik kepada anak saya. Anda harus bertanggung jawab apabila terjadi apa-apa.”</p>
+                    <p>“Kalau begitu saya tidak tahu mesti berkata apa lagi.” Kepala sekolah menghela napas. “Saya sudah membantu anda.”</p>
+                    <p>“Membantu apa?”</p>
+                    <p>“Keluar dari sel. Ibu kira siapa yang menebus ibu?”</p>
+                    <p>“Tapi anda juga yang memasukkan saya ke dalam penjara.”</p>
+                    <p>“Itu adalah respon kesadaran saya yang paling sadar pada waktu itu. Saya juga dirugikan di sini.” Tiba-tiba kepala sekolah menggelengkan kepalanya yang tampak ringan itu, seperti tak percaya apa yang telah menimpanya.</p>
+                    <p>“Lalu bagaimana dengan anak saya?”</p>
+                    <p>“Anak anda tidak bagaimana-bagaimana. Dia sedang dididik. Saya yang mendidiknya.”</p>
+                    <p>Mata Sulis berkaca-kaca. “Dengan menyentuhnya? Memaksa mencukur rambutnya?”</p>
+                    <p>“Jika itu diperlukan.”</p>
+                    <p>“Anda tahu? Yang anda lakukan adalah penganiayaan terhadap anak!” Suara Sulis meninggi. Air matanya mengalir.</p>
+                    <p>Kepala sekolah tampak panik dan memberi isyarat agar Sulis tetap tenang. Dan merespons dengan suara yang berat dan berbisik, “Saya sudah cukup bersabar. Saya tidak tahu apa lagi yang anda inginkan.”</p>
+                    <p>“Saya sudah sampaikan tadi. Saya hanya ingin pulang. Jadi biarkan saya pulang sekarang.” Sulis berdiri saat seorang pelayan mendekat membawa satu nampan makanan dan minuman. Sulis menunggunya selesai menata dan pergi kemudian berkata, “Nikmati malam anda. Semoga Tuhan membalas anda seburuk-buruknya.”</p>
+                    <p>Turun dari motor ojek, Sulis mendapati anaknya sedang terduduk menangis sendiri di teras rumah. Samar-samar tampak kepalanya yang plontos tersinari lampu lima watt yang remang-remang. Ia langsung memeluknya dan bertanya ada apa, di mana ayahnya. Anak itu menangis semakin kencang dan hanya memberi gelengan sebagai jawaban. Sulis mengajak anaknya masuk. Di dalam rumah semua pintu terbuka sampai ke pintu belakang, ke arah kandang ayam milik Sulis. Bersama anaknya memegangi bajunya, Sulis menemukan kandang ayam yang menjadi sumber mata pencahariannya porak poranda. Tak ada satupun ayam terlihat atau kokoknya terdengar. Di kepala Sulis, tak ada wujud atau suara apa pun malam itu. [*]</p>
+                `
+            },
+            "Mata-Mata": {
+                judul: "Mata-Mata",
+                penulis: "Yin Ude",
+                isi: `
+                    <p>Langit hitam, hitam sekali di mata Mayor Hasan. Padahal langit malam ini sama dengan langit malam kemarin, malam sananya, sebelum-sebelumnya: cerah karena purnama. Dan bintang-bintang jelas berkelap-kelip putih. Tapi seperti itu pula, ketika menatap nyala api unggun yang dikelilingi prajuritnya, ia melihat gulita.</p>
+                    <p>Angin menusuk tubuhnya lewat sela seragamnya. Lalu ia yang sedang tegak di jendela barak itu menghela nafas berat. Wajah kecewa komandan batalyon menamparnya. Kolonel itu telah meremehkannya juga.</p>
+                    <p>“Bagaimana Belanda sampai tahu rencanamu, Hasan?” cecarnya kemarin.</p>
+                    <p>Dari balik gulita yang sesungguhnya, di antara dua barak prajurit ia melihat Kapten Mulyo datang.</p>
+                    <p>Langkah lelaki muda itu tangkas dan tegap, menunjukkan sifatnya yang berani dan percaya diri.</p>
+                    <p>Belakangan Hasan semakin meyakini sifat bawahannya itu setelah dua minggu lalu Kapten Mulyo memimpin penyerangan gudang militer Belanda. Pasukannya berhasil merebut banyak sekali senjata beserta amunisi.</p>
+                    <p>“Sudah dapat?”</p>
+                    <p>Belum sampai sang kapten masuk, Mayor Hasan sudah menyambut dengan pertanyaan.</p>
+                    <p>Kapten menabik, tegas, tapi lengannya kemudian turun dengan lesu. Suaranya lirih, “Semua prajurit telah diperiksa. Barak disisir untuk menemukan petunjuk. Kesimpulan saya tak ada antek Belanda di kompi kita, yang membocorkan rencana penyergapan kemarin.”</p>
+                    <p>Maka komandan kompi kembali ke jendela dan batinnya mendapati api unggun telah padam di tengah lingkaran prajurit yang sedang mengusir dingin dengan nyalanya.</p>
+                    <p>“Bagaimana rencana kita menerima masuknya laskar wanita?”</p>
+                    <p>Mayor menoleh. Sinis. Lalu memerhatikan tiga petugas medis wanita yang sedang bercengkerama di dekat barak medis. Tak pernah ia biarkan senjata di gudang kompi disentuh kaum itu. Setiap melihat mereka menyentuh gagang senapan, tatapan Hasan langsung melembing. Ketika ia menyaksikan tangan-tangan lembut mereka melipat perban atau menggotong tandu, Hasan yakin, memang itulah mereka adanya.</p>
+                    <p>“Tidak!” jawabnya.</p>
+                    <p>“Di luar sana kaum wanita juga ditakuti Belanda, Mayor…” Wakil itu masih menyanggah komandannya.</p>
+                    <p>“Kembali saja selidiki mata-mata dalam pasukan! Itu lebih berguna,” potong Hasan.</p>
+                    <p>Tabik Mulyo menutup sedikit mukanya yang kecut, tapi membesi.</p>
+                    <p>Cahaya lampu teplok memapar wajah Mayor Hasan yang memberengut. Berulang ia menghela nafas, menggeleng-geleng saat dinding menjelma layar.</p>
+                    <p>Adegan demi adegan penyergapan yang ia susun membakar hatinya.</p>
+                    <p>Angin siang yang kering menyambut peleton Letnan Satu Suwarno. Tiga puluh laki-laki berwajah tegang merayap naik ke punggung bukit timur. M1 Carbine Para, Arisaka, Owen Gun hingga hanya bambu runcing di tangan dan dekapan mereka. Sang komandan menggenggam erat pistol Nambu type 94. Ilalang yang tinggi melindungi gerakan peleton lain di bawah pimpinan Letnan Dua Pujo. Mereka telah menguasai punggung bukit barat. Matahari musim kemarau menyorot pagar prajurit timur dan barat itu yang siap tempur.</p>
+                    <p>Pagar itu menunggu konvoi kendaraan tentara Belanda yang menuju selatan, melewati jalan di bawah mereka. Mayor Hasan dan Kapten Mulyo bersama pasukan pemukul, peleton Letnan Satu Arif yang juga telah sedia, bersiap menyerang untuk menutup jalan mundur. Akan segera terjadi: Belanda terdesak terus ke selatan, tak bisa menghindari takdir buruk di jembatan yang telah hancur setelah diledakkan anggota kompi.</p>
+                    <p>Tak berkedip Mayor Hasan mengawasi jalan yang menjadi pusat perhatian seluruh prajurit. Sten Gun-nya telah ia sandarkan ke batu besar di depannya, dengan moncong mengarah ke jalan itu. Ia tersenyum, membayangkan musuhnya tersudut di titik buntu. Di sampingnya, Kapten Mulyo berulang kali menarik nafas. Gemuruh dadanya menanti waktu baku tembak.</p>
+                    <p>Setengah jam waktu berjalan.</p>
+                    <p>“Lama sekali. Apakah sudah benar kerja intelijen kita?” Panas udara memicu keringat di tubuh Kapten Mulyo. Ia gerah. Menjadi tak sabar.</p>
+                    <p>Mayor Hasan tersenyum. Memberi semangat pada wakilnya itu tanpa kata.</p>
+                    <p>Tapi Mulyo menarik nafas, menghembuskannya dengan hentakan.</p>
+                    <p>“Tenang, Kapten. Menunggu untuk kemenangan memang membosankan.” Mayor berucap lembut.</p>
+                    <p>Hampir dua jam. Kapten Mulyo memutar badan, terlentang. Matanya terpejam karena tak sanggup menentang matahari. Tubuh-tubuh prajurit lain mulai lunglai. Karena lelah menanti dan ketegangan tanpa ujung. Seandainya sudah baku tembak, ketegangan itu akan menemukan jalan pelampiasan.</p>
+                    <p>Mayor Hasan mengangkat teropong, mendapati di kejauhan pasukan barat dan timur juga semakin banyak yang merebahkan diri.</p>
+                    <p>“Sampaikan kepada semua pasukan, istirahat, tapi tetap waspada.”</p>
+                    <p>Perintah itu mengharuskan Kapten Mulyo segera mengangkat SCR-300 dari ransel prajurit komunikasi di sampingnya.</p>
+                    <p>Dua jam.</p>
+                    <p>Kapten Mulyo terus memandang komandannya. Mayor Hasan sedang berdoa.</p>
+                    <p>“Telik sandi datang!”</p>
+                    <p>Bisikan Mulyo menghentikan khusyuknya Hasan.</p>
+                    <p>Kahar, telik sandi terengah-engah datang melapor, “Belanda memutar lewat utara, menjauhi area penyergapan!”</p>
+                    <p>Muka komandan kompi sontak memerah…</p>
+                    <p>Mayor Hasan tersentak. Langkah kaki seseorang merenggut dirinya dari lamunan. Sarina, tukang masak sekaligus tukang pijatnya masuk membawa nampan berisi mug penuh kopi.</p>
+                    <p>Sementara perempuan muda itu meletakkan bawaannya di meja, Hasan sudah membuka kemejanya dan tengkurap di tikar di tengah ruang. Begitu selalu, Sarina sudah mengerti tugasnya tanpa diperintah.</p>
+                    <p>Setengah jam kemudian Sarina pergi. Licin minyak pijat tersisa di tikar. Mayor pun menyekanya dengan sehelai sapu tangan dengan bordiran bunga tulip. Itu milik sang perempuan yang tertinggal.</p>
+                    <p>“Ah, perempuan, enaknya memijat. Makin tak kupercaya menggenggam senapan!” bisiknya, melecehkan, seraya mengangkat mug kopi.</p>
+                    <p>Tapi jauh di dalam hatinya, terbetik keinginannya menjadikan gadis itu isteri ketiga.</p>
+                    <p>“Akan kusampaikan besok lusa,” batinnya.</p>
+                    <p>Sebagai komandan, ia gengsi terburu-buru sebab baru dua minggu lebih Sarina tiba di barak, setelah ia “melamar” kerja lewat perempuan medis.</p>
+                    <p>“Ingin membantu perjuangan sebagai tukang masak dan tukang pijat,” katanya saat kali pertama datang.</p>
+                    <p style="text-align: center;">***</p>
+                    <p>Kuning cahaya obor membentuk bayangan Sarina yang duduk di balai-balai depan barak perempuan. Ia menatapinya. Matanya segera menumbuk hitam masa lalunya.</p>
+                    <p>Ibunya tegak di pintu kamar.</p>
+                    <p>“Perempuan tak perlu sekolah. Buka jendela itu, lihat di luar, bunga di tangkai, menunggu kumbang tanpa berulah!”</p>
+                    <p>Seruannya dengan segera memancang jeruji di ambang.</p>
+                    <p>Riuh cengkerama remaja-remaja pria di teras, di jalan-jalan, di langit-langit mimpinya yang ia tatapi dalam sepi. Dadanya gemuruh. Dan yang paling petir adalah senda gurau nona-nona Belanda di sebuah sekolah, ketika ia di belakang sekolah itu, memetik kangkung empang, untuk belajar memasak brambang asem, yang dikatakan ibu bapaknya, “Buat seorang suami, yang akan segera datang, yang tugasmu menunggunya.”</p>
+                    <p>Senyum gadis itu selalu pada bayangnya di cermin. Alisnya melengkung indah, bulu matanya lentik, hidungnya mancung bangir, bibirnya tipis merah, kulitnya coklat halus, badannya semampai.</p>
+                    <p>Nona-nona Belanda kerap meliriknya. Iri.</p>
+                    <p>“Tapi bagaimana dunia akan melirik? Jika ibu bapak menabiriku dengan kebodohan pingitan?”</p>
+                    <p>Kecut wajahnya.</p>
+                    <p>“Negeri ini sudah begini sejak dulu,” keluhnya.</p>
+                    <p>Maka merah padam wajah Sarina. Menyala sesuatu dalam dadanya: perubahan.</p>
+                    <p>Ia sering bermimpi desanya menjelma sebuah kota di suatu tempat, yang semua orang di sana bebas bersekolah, bekerja, melakukan apa saja yang sesuai dengan isi hati mereka. Terutama bagi perempuan, tak ada kekangan.</p>
+                    <p>Matanya nanar mencari wajah-wajah yang bisa menjanjikannya perubahan.</p>
+                    <p>“Tidak ada!” bisiknya, lirih, sedih. “Orang-orang negeri ini akan selamanya begini….”</p>
+                    <p>Bayangan ceria nona-nona Belanda, keanggunan nyonya-nyonya dan karisma tuan-tuan kulit putih mengalirkan kenyamanan dalam hatinya.</p>
+                    <p>Ketika muncul wajah Meneer Kolonel Egbert, hati perempuan itu kian damai.</p>
+                    <p>Hari itu warga desa dikumpulkan di alun-alun oleh tentara Belanda. Semua laki-laki besar kecil, tua muda diangkut dengan truk. Sarina tak paham ke mana dan untuk apa. Para perempuan dibedakan. Anak-anak kecil dan orang tua disuruh pulang, sedangkan remaja -ada dua belas orang- disuruh menghadap komandan mereka, Kolonel Egbert.</p>
+                    <p>Seorang sersan -sambil senyam senyum, ekor mata melirik nakal kepada para gadis- membisikkan sesuatu di telinga kolonel itu.</p>
+                    <p>Sarina paham ada kejahatan dalam senyum itu.</p>
+                    <p>Muka Kolonel Egbert berubah merah, dan deras tangan kekarnya menampar muka sersan itu.</p>
+                    <p>Entah apa katanya, dalam Bahasa Belanda, Sarina tak mengerti. Yang jelas kemudian semua gadis disuruh pulang oleh sersan yang kecut itu.</p>
+                    <p>Sarina ditahan sebentar oleh sang kolonel.</p>
+                    <p>“Kau cantik, dan akan bagus kalau pintar.”</p>
+                    <p>Kalimat terbata-bata karena logat Belanda itu menggema bagai lagu yang aneh, tapi merdu di ruang batin Sarina.</p>
+                    <p>Dan ia geram saat suara Demang Joko menyusup.</p>
+                    <p>Pria itu pernah menarik tangannya dan berkata, “Kamu ayu, harusnya menjadi isteri keempatku.”</p>
+                    <p>Damainya, jika negeri ini terus diperintah Belanda. Menggema selalu kata hatinya, setelah hari di alun-alun itu.</p>
+                    <p>Dini hari, perempuan desa itu melepaskan diri dari kungkungan jeruji kamarnya. Ibu bapaknya masih lelap, sementara ia gegas melangkah, menyusuri gulita jalan yang telah ia pilih: ikut berjuang agar Belanda tetap berkuasa.</p>
+                    <p style="text-align: center;">***</p>
+                    <p>Gulita sesungguhnya kembali memunculkan Kapten Mulyo. Ia menuju barak komandan lagi.</p>
+                    <p>“Barak, barang-barang pribadi prajurit telah diperiksa. Tak ada yang mencurigakan.” Lapornya setiba di depan Mayor Hasan. “Bagaimana kalau kita mencoba berpikir bahwa mata-mata itu perempuan.”</p>
+                    <p>Mayor Hasan tertawa. Terbahak-bahak. Matanya sampai memicing, menahan geli teramat sangat.</p>
+                    <p>Ia sedang melihat sekelompok pria mata-mata yang diinterogasinya dalam berbagai medan pertempuran. Lembing di mata mereka, hendak menghujam Mayor Hasan yang akan segera melubangi kepala mereka dengan pelor. Lalu senyum sinis, mengejek, sebagai jawaban tegas atas pertanyaan-pertanyaan interogator. Ludah mereka percikkan pula ke lantai, biar pun akan lumer dalam genangan darah.</p>
+                    <p>Pandangannya beralih pula kepada perempuan medis yang terus bercengkerama.</p>
+                    <p>Pikirannya membawanya lagi ke ruang interogasi. Ratap tangis meminta ampun, meminta dibebaskan meledak, membuat tawa mayor itu meledak lagi.</p>
+                    <p>“Memanggul senapan saja mereka kuragukan, Kapten! Apalagi menghadapi risiko seorang mata-mata,” katanya di antara sisa tawanya.</p>
+                    <p>“Siapa perempuan di sini yang akan berani berkorban menghadapi risiko itu?”</p>
+                    <p>Bibir Kapten Mulyo terkatup. Kepalanya menggeleng-geleng.</p>
+                    <p>Tapi… kepalanya tiba-tiba tegak terdiam. Tatapannya menumbuk sapu tangan merah jambu dengan bordiran bunga tulip dan tulisan kecil “Willem-Sari” yang menjuntai digenggam Hasan.</p>
+                    <p>“Bagus sapu tangannya, Komandan,” selidiknya. Dadanya gemuruh.</p>
+                    <p>“Oh, ini… sapu tangan Sarina, tertinggal.” Agak gugup Mayor Hasan, merasa tak seharusnya sapu tangan itu ada di tangannya.</p>
+                    <p>Sesosok tubuh letnan Belanda terkapar dalam ingatan Mulyo. Ingatan dari penyerangan yang ia pimpin dua minggu lalu.</p>
+                    <p>Perwira penjajah itu baru terjengkang setelah granat salah seorang prajurit kompi meledak di depannya.</p>
+                    <p>Tangan kirinya, yang terulur layu masih menggenggam sehelai sapu tangan biru dengan bordiran bunga tulip.</p>
+                    <p>Tertarik, Kapten Mulyo melihatnya lebih dekat. Ada tulisan kecil “Willem-Sari” di bawah bunga tulip. Dibordir pula.</p>
+                    <p>Ia tersenyum. “Pasti namanya dan kekasihnya,” terkanya seraya meninggalkan jasad musuhnya itu.</p>
+                    <p>“Komandan tak perhatikan tulisan di sapu tangan itu?” Pertanyaan tiba-tiba dari Kapten Mulyo menghentak, memancing rasa penasaran Hasan.</p>
+                    <p>Diangkatkan sapu tangan itu, dibentangkan, dan… muka sang komandan berubah. Kecut!</p>
+                    <p>Lelaki yang ada hati pada Sarina itu kecewa karena ia langsung berkeyakinan bahwa dirinya sudah punya saingan!</p>
+                    <p>“Willem?” bisiknya kalut.</p>
+                    <p>Tak ada tabik lagi. Merah padam wajah Kapten Mulyo. Ia pergi begitu saja. Derap sepatu but-nya di tanah basah meninggalkan jejak kemarahan, yang tak dimengerti komandannya.</p>
+                    <p>Alis Mayor Hasan berkerut, menatap kapten itu yang kini sedang berhadapan dengan Sarina yang tiba-tiba muncul dari balik barak.</p>
+                    <p>Ia tidak mendengar percakapan mereka yang memanaskan udara malam yang semakin dingin.</p>
+                    <p>“Saya lupa sesuatu di barak komandan.”</p>
+                    <p>“Sapu tangan dengan bordiran bunga tulip, kan?”</p>
+                    <p>Berubah raut wajah Sarina. Andai terang akan jelas ekspresinya kecut.</p>
+                    <p>“Itu pasangan sapu tangan kekasihmu yang tewas dalam pertempuran dua minggu lalu, kan?”</p>
+                    <p>Tubuh Sarina gemetar.</p>
+                    <p>Tatapan Kapten Mulyo menghujam. Telapak tangan kanannya terangkat pelan, menempel di pistol yang melekati pinggangnya.</p>
+                    <p>“Sarina! Kemari!”</p>
+                    <p>Seruan Mayor Hasan menghentak kedua orang itu. Bara udara padam tiba-tiba.</p>
+                    <p>Tapi tidak bara di dada Mulyo.</p>
+                    <p>Ia berbalik, menatapi punggung perempuan yang telah masuk ke dalam barak pimpinannya itu.</p>
+                    <p>Tiba-tiba sebuah letusan membelah malam, dari pistol yang teracung tinggi di tangan gemetar Kapten Mulyo.</p>
+                    <p>Mata Mayor Hasan terbelalak. Seluruh prajurit terperanjat dan mengerumuni kapten mereka.</p>
+                    <p>Mereka bingung.</p>
+                    <p>Hanya Sarina yang tahu arti letusan itu. [*]</p>
+                `
+            },
+            "Makhluk Malang dalam Karung": {
+                judul: "Makhluk Malang dalam Karung",
+                penulis: "Arianto Adipurwanto",
+                isi: `
+                    <p>Malam semakin larut saat suara seretan karung terdengar di lantai kayu. Tidak ada yang berani bertanya apa isinya...</p>
+                    <p>Di dalam karung itu, sesuatu bergerak-gerak lemah. Sebuah rahasia desa yang selama ini disembunyikan rapat-rapat kini mulai terkuak...</p>
+                `
+            },
+            "Kawan Masa Lalu": {
+                judul: "Kawan Masa Lalu",
+                penulis: "Budi Hatees",
+                isi: `
+                    <p>Pertemuan itu terjadi di sebuah kedai kopi tua. Wajahnya hampir tak kukenali, tertutup oleh kerutan waktu dan beban hidup...</p>
+                    <p>"Sudah lama ya," katanya pelan. Suaranya masih sama, membawa kembali memori tentang janji-janji masa sekolah yang tak pernah ditepati...</p>
+                `
+            },
+            "Pohon Kepala": {
+                judul: "Pohon Kepala",
+                penulis: "Surya Gemilang",
+                isi: `
+                    <p>Di pinggir pantai itu, tumbuh sebuah pohon yang aneh. Penduduk desa menyebutnya Pohon Kepala karena bentuk buahnya yang menyerupai wajah manusia...</p>
+                    <p>Konon, setiap kali angin kencang bertiup, pohon itu akan membisikkan nama-nama mereka yang akan hilang di laut...</p>
+                `
+            },
+            "Melukis Grindelwald": {
+                judul: "Melukis Grindelwald",
+                penulis: "Yuan Jonta",
+                isi: `
+                    <p>Kuas itu menari di atas kanvas. Setiap goresan warna gelap menggambarkan kengerian yang tersembunyi di balik pegunungan Alpen...</p>
+                    <p>Sang pelukis terobsesi menangkap aura Grindelwald, sosok yang tidak hanya ada dalam dongeng, tapi nyata dalam ketakutannya...</p>
+                `
+            }
+        };
+
+        // Ambil parameter ID dari URL
+        const params = new URLSearchParams(window.location.search);
+        const bookId = params.get('id');
+
+        // Referensi Element
+        const judulEl = document.getElementById('judulCerpen');
+        const penulisEl = document.getElementById('penulisCerpen');
+        const isiEl = document.getElementById('isiCerita');
+        const endLabelEl = document.getElementById('endLabel');
+        const backLinkEl = document.getElementById('backLink');
+
+        // Atur tautan kembali secara cerdas (apakah ke dashboard atau ke index)
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            backLinkEl.href = "dashboard_user.html";
+        } else {
+            backLinkEl.href = "index.html";
+        }
+
+        // Tampilkan cerita berdasarkan ID dari database lokal (LR) atau hardcoded databaseCerita
+        let cerita = null;
+        if (window.LR) {
+            cerita = LR.getBook(bookId);
+        }
+        if (!cerita && bookId && databaseCerita[bookId]) {
+            cerita = databaseCerita[bookId];
+        }
+
+        if (cerita) {
+            judulEl.innerText = cerita.judul;
+            penulisEl.innerText = `Oleh ${cerita.penulis}`;
+            isiEl.innerHTML = cerita.isi;
+            endLabelEl.style.display = "block";
+
+            // Catat progres membaca / record read jika ada user yang masuk
+            if (window.LR) {
+                const user = LR.getCurrentUser();
+                if (user) {
+                    LR.recordRead(cerita.id, user.email);
+                    LR.markFinished(cerita.id, user.email);
+                }
+            }
+        } else {
+            judulEl.innerText = "Cerita Tidak Ditemukan";
+            penulisEl.innerText = "-";
+            isiEl.innerHTML = "<p>Maaf, cerita yang Anda pilih belum tersedia atau telah dihapus.</p>";
+            endLabelEl.style.display = "none";
+        }
+
+        function showAuthorProfileModal() {
+            if (!cerita || !cerita.penulis) return;
+            const profile = window.LR ? LR.getAuthorProfile(cerita.penulis) : { name: cerita.penulis, photo: null, bio: "Penulis lokal di LokalReads" };
+            document.getElementById("authorModalName").textContent = profile.name;
+            document.getElementById("authorModalBio").textContent = profile.bio;
+
+            const modalAvatar = document.getElementById("authorModalAvatar");
+            if (profile.photo) {
+                modalAvatar.innerHTML = `<img src="${profile.photo}" alt="${profile.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            } else {
+                const initials = profile.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()
+                    .slice(0, 2);
+                modalAvatar.textContent = initials;
+            }
+            document.getElementById("authorModalOverlay").style.display = "flex";
+        }
+
+        function closeAuthorModal() {
+            document.getElementById("authorModalOverlay").style.display = "none";
+        }
+    </script>
+
+    <!-- Modal Profil Penulis -->
+    <div class="modal-overlay" id="authorModalOverlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+      <div style="background: #fff; border-radius: 16px; padding: 2.5rem; max-width: 480px; width: 90%; text-align: left; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.3rem; font-weight: 700; color: #111; margin: 0;">Profil Penulis</h3>
+          <button onclick="closeAuthorModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; padding: 0 0.5rem;">&times;</button>
+        </div>
+        <div style="display: flex; gap: 1.2rem; align-items: center; margin-bottom: 1.5rem; background: #f9f9f9; padding: 1rem; border-radius: 12px;">
+          <div id="authorModalAvatar" style="width: 70px; height: 70px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; flex-shrink: 0; overflow: hidden;">FK</div>
+          <div>
+            <h4 id="authorModalName" style="margin: 0 0 0.2rem 0; font-size: 1.1rem; color: #111;">Penulis</h4>
+            <div style="font-size: 0.85rem; color: #666;">Penulis di LokalReads</div>
+          </div>
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <h5 style="font-size: 0.95rem; font-weight: 700; color: #111; margin-bottom: 0.5rem;">Biografi Penulis</h5>
+          <p id="authorModalBio" style="font-size: 0.9rem; color: #555; line-height: 1.7; margin: 0; background: #fff; border: 1px solid #eee; padding: 1rem; border-radius: 8px; max-height: 220px; overflow-y: auto; text-align: justify;"></p>
+        </div>
+        <div style="display: flex; justify-content: flex-end;">
+          <button style="background: #111; color: #fff; border: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer;" onclick="closeAuthorModal()">Tutup</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>

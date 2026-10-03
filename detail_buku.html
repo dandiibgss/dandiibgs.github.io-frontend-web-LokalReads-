@@ -1,0 +1,1844 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Buku - LokalReads</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    @font-face {
+      font-family: 'PP Writer';
+      src: url('asset/PPWriter-Bold.otf') format('opentype');
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Medium.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Semibold.otf') format('opentype');
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Bold.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Black.otf') format('opentype');
+      font-weight: 900;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Anti-Bentrokan Bootstrap */
+    a {
+      text-decoration: none !important;
+      color: inherit;
+    }
+    a:hover {
+      color: inherit;
+    }
+
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+      background-color: #f9f9f9;
+      color: #111111;
+      line-height: 1.6;
+    }
+
+    input, select, textarea, button {
+      font-family: inherit;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111111;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: -20px;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+    }
+
+    .menu-toggle .bar {
+      height: 3px;
+      width: 100%;
+      background-color: #111111;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-collapse {
+      display: contents;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .nav-links a, .user-menu-wrap a {
+      color: #555555;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a.active {
+      color: #111111;
+      border-bottom: 2px solid #111111;
+    }
+
+    .nav-links a:hover, .user-menu-wrap a:hover {
+      color: #111111;
+    }
+
+    .user-menu-wrap {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Book Header */
+    .book-header {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .book-cover {
+      position: relative;
+    }
+
+    .book-cover img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .book-info h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #111111;
+    }
+
+    .book-author {
+      font-size: 1.1rem;
+      color: #555555;
+      margin-bottom: 1rem;
+    }
+
+    .book-author a {
+      color: #111111;
+      text-decoration: none;
+    }
+
+    .book-author a:hover {
+      text-decoration: underline;
+    }
+
+    .rating-summary {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .rating-big {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .stars {
+      color: #f59e0b;
+      font-size: 1.2rem;
+    }
+
+    .rating-count {
+      color: #555555;
+      font-size: 0.9rem;
+    }
+
+    .genre-badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      background: #f0f0f0;
+      color: #555555;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Pricing Options */
+    .pricing-section {
+      margin: 2rem 0;
+    }
+
+    .pricing-title {
+      font-size: 0.9rem;
+      color: #555555;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pricing-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .pricing-card {
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .pricing-card:hover {
+      border-color: #111111;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .pricing-card.popular {
+      background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111111;
+      color: #fff;
+      padding: 0.2rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .pricing-label {
+      font-size: 0.85rem;
+      color: #555555;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111111;
+      margin-bottom: 0.3rem;
+    }
+
+    .pricing-period {
+      font-size: 0.8rem;
+      color: #666666;
+      margin-bottom: 1rem;
+    }
+
+    .pricing-btn {
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .pricing-btn.free {
+      background: #e5e5e5;
+      color: #111111;
+    }
+
+    .pricing-btn.free:hover {
+      background: #d4d4d4;
+    }
+
+    .pricing-btn.popular {
+      background: #111111;
+      color: #fff;
+    }
+
+    .pricing-btn.popular:hover {
+      background: #222222;
+    }
+
+    .pricing-btn.buy {
+      background: transparent;
+      color: #111111;
+      border: 2px solid #111111;
+    }
+
+    .pricing-btn.buy:hover {
+      background: #111111;
+      color: #fff;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.9rem 1.5rem;
+      border: none !important;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary, button.btn-primary {
+      background: #111111 !important;
+      color: #fff !important;
+      border: none !important;
+    }
+
+    .btn-primary:hover, button.btn-primary:hover {
+      background: #222222 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #111111;
+    }
+
+    .btn-secondary:hover {
+      background: #e5e5e5;
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    /* Tabs */
+    .tabs-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #e5e5e5;
+      background: #f9f9f9;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 1.2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #555555;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .tab:hover {
+      color: #111111;
+      background: #f0f0f0;
+    }
+
+    .tab.active {
+      color: #111111;
+    }
+
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #111111;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 2rem;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Synopsis */
+    .synopsis h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #111111;
+    }
+
+    .synopsis p {
+      color: #555555;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    /* Rating Distribution */
+    .rating-distribution {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .rating-distribution h3 {
+      margin-bottom: 1.5rem;
+      color: #111111;
+      font-size: 1.1rem;
+    }
+
+    .rating-overview {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .rating-big-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .rating-stars-display {
+      color: #f59e0b;
+      font-size: 1.5rem;
+    }
+
+    .rating-total {
+      color: #555555;
+      font-size: 0.9rem;
+    }
+
+    .rating-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .rating-label {
+      width: 80px;
+      font-size: 0.9rem;
+      color: #555555;
+    }
+
+    .rating-bar {
+      flex: 1;
+      height: 8px;
+      background: #e5e5e5;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .rating-bar-fill {
+      height: 100%;
+      background: #f59e0b;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .rating-count-num {
+      width: 40px;
+      text-align: right;
+      font-size: 0.85rem;
+      color: #666666;
+    }
+
+    /* Reviews */
+    .reviews-section {
+      margin-top: 2rem;
+    }
+
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .reviews-header h3 {
+      font-size: 1.2rem;
+      color: #111111;
+    }
+
+    .filter-sort {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      padding: 0.4rem 1rem;
+      border: 1px solid #e5e5e5;
+      background: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #555555;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #111111;
+      color: #fff;
+      border-color: #111111;
+    }
+
+    .review-card {
+      padding: 1.5rem;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+
+    .review-card:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .reviewer-name {
+      font-weight: 600;
+      color: #111111;
+    }
+
+    .review-date {
+      font-size: 0.85rem;
+      color: #666666;
+    }
+
+    .review-stars {
+      color: #f59e0b;
+      margin-bottom: 0.5rem;
+    }
+
+    .review-text {
+      color: #555555;
+      line-height: 1.7;
+    }
+
+    /* Review Form */
+    .review-form {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .review-form h3 {
+      margin-bottom: 1rem;
+      color: #111111;
+    }
+
+    .star-rating-input {
+      display: flex;
+      gap: 0.3rem;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    .star-rating-input span {
+      color: #d4d4d4;
+      transition: color 0.2s;
+    }
+
+    .star-rating-input span.active,
+    .star-rating-input span:hover {
+      color: #f59e0b;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555555;
+      font-size: 0.9rem;
+    }
+
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #111111;
+    }
+
+    .btn-submit {
+      background: #111111;
+      color: #fff;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: #222222;
+    }
+
+    /* About Author */
+    .author-profile {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      padding: 2rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .author-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #111111;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .author-info h3 {
+      margin-bottom: 0.5rem;
+      color: #111111;
+      font-size: 1.3rem;
+    }
+
+    .author-role {
+      color: #111111;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .author-bio {
+      color: #555555;
+      line-height: 1.7;
+    }
+
+    .author-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #555555;
+    }
+
+    /* Similar Books Section */
+    .similar-books {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .similar-books h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: #111111;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .book-card {
+      background: #f9f9f9;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .book-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .book-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .book-card-info {
+      padding: 1rem;
+    }
+
+    .book-card-title {
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 0.3rem;
+      font-size: 0.95rem;
+    }
+
+    .book-card-author {
+      color: #555555;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .book-card-rating {
+      color: #f59e0b;
+      font-size: 0.9rem;
+    }
+
+    /* Modal/Popup Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: modalSlideIn 0.3s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, #111111 0%, #222222 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-icon svg {
+      width: 32px;
+      height: 32px;
+      color: #fff;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111111;
+      margin-bottom: 1rem;
+    }
+
+    .modal-message {
+      color: #555555;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-btn {
+      background: linear-gradient(135deg, #111111 0%, #222222 100%);
+      color: #fff;
+      border: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .logo {
+        margin-left: 0;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-collapse {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 1.5rem 2rem;
+        gap: 1.5rem;
+        margin-left: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        align-items: stretch;
+      }
+
+      .nav-collapse.active {
+        display: flex;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        width: 100%;
+        margin: 0;
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding: 0.5rem 0;
+      }
+
+      .user-menu-wrap {
+        width: 100%;
+        border-top: 1px solid #eaeaea;
+        padding-top: 1rem;
+        margin: 0;
+      }
+
+      .user-menu-wrap a {
+        width: 100%;
+        padding: 0.5rem 0;
+        display: block;
+      }
+
+      /* Hamburger animation when active */
+      .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+      }
+      .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+      }
+      .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+      }
+
+      .book-header {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.5rem;
+      }
+
+      .book-cover {
+        max-width: 200px;
+        margin: 0 auto;
+      }
+
+      .pricing-options {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .navbar-container {
+        padding: 0 1rem;
+      }
+
+      .container {
+        padding: 1.5rem 1rem;
+      }
+
+      .author-profile {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+        gap: 1.5rem;
+      }
+
+      .author-stats {
+        justify-content: center;
+      }
+
+      .books-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .modal-content {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+      .book-card img {
+        height: 200px;
+      }
+      .book-card-info {
+        padding: 0.8rem;
+      }
+      .book-card-title {
+        font-size: 0.9rem;
+      }
+      .book-card-author {
+        font-size: 0.8rem;
+      }
+      
+      .rating-overview {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="logo">
+        <img src="asset/lokalreads_horizontal_logo_black.png" alt="LokalReads"
+          style="height: 32px; object-fit: contain;">
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <div class="nav-collapse" id="navCollapse">
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+        </div>
+        <div class="user-menu-wrap">
+          <a href="#" id="userNav">Masuk</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Modal Popup -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <div class="modal-icon" id="modalIcon">
+        <!-- SVG icon will be inserted here -->
+      </div>
+      <h3 class="modal-title" id="modalTitle">Judul</h3>
+      <p class="modal-message" id="modalMessage">Pesan</p>
+      <button class="modal-btn" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+
+  <!-- Modal Profil Penulis -->
+  <div class="modal-overlay" id="authorModalOverlay">
+    <div class="modal-content" style="max-width: 480px; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: #111; margin: 0;">Profil Penulis</h3>
+        <button onclick="closeAuthorModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; padding: 0 0.5rem;">&times;</button>
+      </div>
+      <div style="display: flex; gap: 1.2rem; align-items: center; margin-bottom: 1.5rem; background: #f9f9f9; padding: 1rem; border-radius: 12px;">
+        <div class="author-avatar" id="authorModalAvatar" style="width: 70px; height: 70px; font-size: 1.8rem; flex-shrink: 0; overflow: hidden;">FK</div>
+        <div>
+          <h4 id="authorModalName" style="margin: 0 0 0.2rem 0; font-size: 1.1rem; color: #111;">Penulis</h4>
+          <div style="font-size: 0.85rem; color: #666;">Penulis di LokalReads</div>
+          <div style="font-size: 0.85rem; color: #111; font-weight: 600; margin-top: 0.3rem;"><span id="authorModalBooks">1</span> Karya Terbit</div>
+        </div>
+      </div>
+      <div style="margin-bottom: 1.5rem;">
+        <h5 style="font-size: 0.95rem; font-weight: 700; color: #111; margin-bottom: 0.5rem;">Biografi Penulis</h5>
+        <p id="authorModalBio" style="font-size: 0.9rem; color: #555; line-height: 1.7; margin: 0; background: #fff; border: 1px solid #eee; padding: 1rem; border-radius: 8px; max-height: 220px; overflow-y: auto; text-align: justify;"></p>
+      </div>
+      <div style="display: flex; gap: 0.8rem;">
+        <button class="modal-btn" style="flex: 1;" onclick="closeAuthorModal(); switchTabByName('tentang'); document.getElementById('tab-tentang').scrollIntoView({behavior: 'smooth'});">Lihat Tab Penulis</button>
+        <button class="modal-btn" style="background: #e5e5e5; color: #111;" onclick="closeAuthorModal()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Book Header -->
+    <div class="book-header">
+      <div class="book-cover">
+        <img id="bookCover" src="" alt="Cover Buku" />
+      </div>
+
+      <div class="book-info">
+        <h1 id="bookTitle">Loading...</h1>
+        <p class="book-author">oleh <a href="#" id="bookAuthor" onclick="openAuthorProfileModal(event)">-</a></p>
+
+        <div class="rating-summary">
+          <div class="rating-big" id="ratingAvg">0.0</div>
+          <div>
+            <div class="stars" id="ratingStars">☆☆☆☆☆</div>
+            <div class="rating-count" id="ratingCount">0 ulasan</div>
+          </div>
+        </div>
+
+        <span class="genre-badge" id="bookGenre">Genre</span>
+
+        <!-- Action Buttons with SVG Icons -->
+        <div class="action-buttons">
+          <button id="btnReadNow" class="btn btn-primary" onclick="startReading()">
+            <svg id="readIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            <span id="btnReadText">Baca Sekarang</span>
+          </button>
+          <button class="btn btn-secondary" onclick="openAuthorProfileModal(event)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Profil Penulis
+          </button>
+          <button class="btn btn-secondary" onclick="toggleFavorite()">
+            <svg id="favoriteIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+              </path>
+            </svg>
+            Favorit
+          </button>
+          <button class="btn btn-secondary" onclick="toggleWishlist()">
+            <svg id="wishlistIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Wishlist
+          </button>
+          <button class="btn btn-secondary" onclick="shareBook()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            Bagikan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('deskripsi')">
+          Deskripsi
+        </button>
+        <button class="tab" onclick="switchTab('ulasan')">
+          Ulasan (<span id="reviewCount">0</span>)
+        </button>
+        <button class="tab" onclick="switchTab('tentang')">
+          Tentang Penulis
+        </button>
+      </div>
+
+      <!-- Tab: Deskripsi -->
+      <div id="tab-deskripsi" class="tab-content active">
+        <div class="synopsis">
+          <h2>Sinopsis</h2>
+          <p id="bookSynopsis">Loading...</p>
+        </div>
+
+        <div class="rating-distribution">
+          <h3>Distribusi Rating</h3>
+
+          <div class="rating-overview">
+            <div>
+              <div class="rating-big-number" id="ratingBigNumber">0.0</div>
+              <div class="rating-stars-display" id="ratingStarsDisplay">
+                ☆☆☆☆☆
+              </div>
+              <div class="rating-total" id="ratingTotalText">0 ulasan</div>
+            </div>
+          </div>
+
+          <div id="ratingDistribution">
+            <!-- Will be filled by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Ulasan -->
+      <div id="tab-ulasan" class="tab-content">
+        <!-- Review Form (only if logged in) -->
+        <div class="review-form" id="reviewForm" style="display: none">
+          <h3>Tulis Ulasan Anda</h3>
+          <div class="star-rating-input" id="starInput">
+            <span onclick="setRating(1)">★</span>
+            <span onclick="setRating(2)">★</span>
+            <span onclick="setRating(3)">★</span>
+            <span onclick="setRating(4)">★</span>
+            <span onclick="setRating(5)">★</span>
+          </div>
+          <div class="form-group">
+            <label>Ulasan Anda</label>
+            <textarea id="reviewText" placeholder="Bagikan pendapat Anda tentang buku ini..."></textarea>
+          </div>
+          <button class="btn-submit" onclick="submitReview()">
+            Kirim Ulasan
+          </button>
+        </div>
+
+        <div class="reviews-section">
+          <div class="reviews-header">
+            <h3>Ulasan Pembaca</h3>
+            <div class="filter-sort">
+              <button class="filter-btn active" onclick="filterReviews('terbaru')">
+                Terbaru
+              </button>
+              <button class="filter-btn" onclick="filterReviews('terbaik')">
+                Terbaik
+              </button>
+            </div>
+          </div>
+          <div id="reviewsList">
+            <!-- Reviews will be loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Tentang Penulis -->
+      <div id="tab-tentang" class="tab-content">
+        <div class="author-profile">
+          <div class="author-avatar" id="authorAvatar">AA</div>
+          <div class="author-info">
+            <h3 id="authorName">Tentang Penulis</h3>
+            <div class="author-role">Penulis di LokalReads</div>
+            <p class="author-bio" id="authorBio">
+              Penulis lokal yang berkontribusi di LokalReads dengan karya
+              bergenre Fiksi. Menghadirkan cerita yang dekat dengan keseharian
+              pembaca Indonesia.
+            </p>
+            <div class="author-stats">
+              <div class="stat-item">
+                <div class="stat-value" id="authorBooksCount">0</div>
+                <div class="stat-label">Karya</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="authorAvgRating">0.0</div>
+                <div class="stat-label">Rating</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="authorReaders">0</div>
+                <div class="stat-label">Pembaca</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar Books Section -->
+    <div class="similar-books">
+      <h2>Buku Serupa</h2>
+      <div class="books-grid" id="similarBooks">
+        <!-- Will be filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="lokalreads.js"></script>
+  <script>
+    let currentBook = null;
+    let currentRating = 0;
+    let currentFilter = "terbaru";
+    let redirectUrl = "";
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", function () {
+      loadBookDetail();
+      checkUserLogin();
+    });
+
+    function loadBookDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookId = urlParams.get("id");
+
+      if (!bookId) {
+        showModal("error", "ID buku tidak ditemukan", "");
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000);
+        return;
+      }
+
+      currentBook = LR.getBook(bookId);
+
+      if (!currentBook) {
+        showModal("error", "Buku tidak ditemukan", "");
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000);
+        return;
+      }
+
+      // Populate book info
+      document.getElementById("bookTitle").textContent = currentBook.judul;
+      document.getElementById("bookAuthor").textContent = currentBook.penulis;
+      document.getElementById("bookGenre").textContent = currentBook.genre;
+      document.getElementById("bookSynopsis").textContent =
+        currentBook.sinopsis;
+      document.getElementById("bookCover").src =
+        currentBook.img || "asset/cover.jpg";
+
+      // Populate author profile & bio
+      const authorProfile = LR.getAuthorProfile(currentBook.penulis);
+      document.getElementById("authorName").textContent = authorProfile.name;
+      document.getElementById("authorBio").textContent = authorProfile.bio;
+
+      const avatarContainer = document.getElementById("authorAvatar");
+      if (authorProfile.photo) {
+        avatarContainer.innerHTML = `<img src="${authorProfile.photo}" alt="${authorProfile.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+      } else {
+        const initials = authorProfile.name
+          .split(" ")
+          .map((n) => n[0])
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+        avatarContainer.textContent = initials;
+      }
+
+      // Load rating
+      loadRating();
+
+      // Load reviews
+      loadReviews();
+
+      // Load similar books
+      loadSimilarBooks();
+
+      // Load author stats
+      loadAuthorStats();
+
+      // Record read
+      const user = LR.getCurrentUser();
+      if (user) {
+        LR.recordRead(currentBook.id, user.email);
+      }
+
+      // Update button states
+      updateButtonStates();
+    }
+
+    function updateButtonStates() {
+      const user = LR.getCurrentUser();
+      if (!user || !currentBook) return;
+
+      // Update read button label
+      const readButtonText = document.getElementById("btnReadText");
+      const progress = LR.getProgress(currentBook.id, user.email);
+      if (readButtonText) {
+        if (progress && progress.status === "reading") {
+          readButtonText.textContent = "Lanjutkan Membaca";
+        } else if (progress && progress.status === "finished") {
+          readButtonText.textContent = "Baca Ulang";
+        } else {
+          readButtonText.textContent = "Baca Sekarang";
+        }
+      }
+
+      // Update Favorite icon
+      const isFavorite = LR.isFavorite(currentBook.id, user.email);
+      const favoriteIcon = document.getElementById("favoriteIcon");
+      if (isFavorite) {
+        favoriteIcon.setAttribute("fill", "currentColor");
+        favoriteIcon.setAttribute("stroke", "none");
+      } else {
+        favoriteIcon.setAttribute("fill", "none");
+        favoriteIcon.setAttribute("stroke", "currentColor");
+      }
+
+      // Update Wishlist icon
+      const isWishlisted = LR.isWishlisted(currentBook.id, user.email);
+      const wishlistIcon = document.getElementById("wishlistIcon");
+      if (isWishlisted) {
+        wishlistIcon.setAttribute("fill", "currentColor");
+        wishlistIcon.setAttribute("stroke", "none");
+      } else {
+        wishlistIcon.setAttribute("fill", "none");
+        wishlistIcon.setAttribute("stroke", "currentColor");
+      }
+    }
+
+    function loadRating() {
+      const rating = LR.getRating(currentBook.id);
+      const dist = LR.getRatingDistribution(currentBook.id);
+
+      document.getElementById("ratingAvg").textContent =
+        rating.avg.toFixed(1);
+      document.getElementById("ratingStars").textContent = LR.starString(
+        rating.avg,
+      );
+      document.getElementById("ratingCount").textContent =
+        rating.count + " ulasan";
+      document.getElementById("reviewCount").textContent = rating.count;
+
+      document.getElementById("ratingBigNumber").textContent =
+        rating.avg.toFixed(1);
+      document.getElementById("ratingStarsDisplay").textContent =
+        LR.starString(rating.avg);
+      document.getElementById("ratingTotalText").textContent =
+        rating.count + " ulasan";
+
+      // Distribution bars
+      const distContainer = document.getElementById("ratingDistribution");
+      distContainer.innerHTML = "";
+
+      for (let i = 5; i >= 1; i--) {
+        const count = dist.dist[i] || 0;
+        const percent = dist.total > 0 ? (count / dist.total) * 100 : 0;
+
+        const barHtml = `
+                    <div class="rating-bar-container">
+                        <div class="rating-label">${i} bintang</div>
+                        <div class="rating-bar">
+                            <div class="rating-bar-fill" style="width: ${percent}%"></div>
+                        </div>
+                        <div class="rating-count-num">${count}</div>
+                    </div>
+                `;
+        distContainer.innerHTML += barHtml;
+      }
+    }
+
+    function loadReviews() {
+      const reviews = LR.getReviews(currentBook.id);
+      const container = document.getElementById("reviewsList");
+
+      if (reviews.length === 0) {
+        container.innerHTML =
+          '<p style="color: #8b7355; text-align: center; padding: 2rem;">Belum ada ulasan. Jadilah yang pertama!</p>';
+        return;
+      }
+
+      // Sort reviews
+      const sortedReviews =
+        currentFilter === "terbaru"
+          ? reviews.sort((a, b) => b.createdAt - a.createdAt)
+          : reviews.sort((a, b) => b.rating - a.rating);
+
+      container.innerHTML = sortedReviews
+        .map(
+          (review) => `
+                <div class="review-card">
+                    <div class="review-header">
+                        <div>
+                            <div class="reviewer-name">${review.userName}</div>
+                            <div class="review-stars">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</div>
+                        </div>
+                        <div class="review-date">${LR.timeAgo(review.createdAt)}</div>
+                    </div>
+                    <div class="review-text">${review.text}</div>
+                </div>
+            `,
+        )
+        .join("");
+    }
+
+    function loadSimilarBooks() {
+      const similar = LR.getSimilarBooks(currentBook, 4);
+      const container = document.getElementById("similarBooks");
+
+      if (similar.length === 0) {
+        container.innerHTML =
+          '<p style="color: #8b7355; grid-column: 1/-1; text-align: center;">Belum ada buku serupa</p>';
+        return;
+      }
+
+      container.innerHTML = similar
+        .map((book) => {
+          const rating = LR.getRating(book.id);
+          return `
+                    <div class="book-card" onclick="window.location.href='detail_buku.html?id=${encodeURIComponent(book.id)}'">
+                        <img src="${book.img || "asset/cover.jpg"}" alt="${book.judul}">
+                        <div class="book-card-info">
+                            <div class="book-card-title">${book.judul}</div>
+                            <div class="book-card-author">${book.penulis}</div>
+                            <div class="book-card-rating">${LR.starString(rating.avg)} (${rating.count})</div>
+                        </div>
+                    </div>
+                `;
+        })
+        .join("");
+    }
+
+    function loadAuthorStats() {
+      const authorBooks = LR.getBooksByAuthorName(
+        currentBook.penulis,
+        currentBook.id,
+      );
+      const authorStats = {
+        books: authorBooks.length + 1,
+        avgRating: 0,
+        readers: 0,
+      };
+
+      // Calculate average rating and total readers
+      let totalRating = 0;
+      let totalReviews = 0;
+
+      [currentBook, ...authorBooks].forEach((book) => {
+        const rating = LR.getRating(book.id);
+        totalRating += rating.avg * rating.count;
+        totalReviews += rating.count;
+        authorStats.readers += LR.getReaderCount(book.id);
+      });
+
+      authorStats.avgRating =
+        totalReviews > 0 ? totalRating / totalReviews : 0;
+
+      document.getElementById("authorBooksCount").textContent =
+        authorStats.books;
+      document.getElementById("authorAvgRating").textContent =
+        authorStats.avgRating.toFixed(1);
+      document.getElementById("authorReaders").textContent =
+        authorStats.readers;
+    }
+
+    function checkUserLogin() {
+      const user = LR.getCurrentUser();
+      if (user) {
+        document.getElementById("userNav").textContent = user.name || user.fullname || "User";
+        document.getElementById("reviewForm").style.display = "block";
+
+        document.getElementById("userNav").href = "dashboard_user.html";
+      }
+    }
+
+    function switchTab(tabName) {
+      // Update tabs
+      document
+        .querySelectorAll(".tab")
+        .forEach((tab) => tab.classList.remove("active"));
+      document
+        .querySelectorAll(".tab-content")
+        .forEach((content) => content.classList.remove("active"));
+
+      if (event && event.target) {
+        event.target.classList.add("active");
+      }
+      document.getElementById("tab-" + tabName).classList.add("active");
+    }
+
+    function switchTabByName(tabName) {
+      document
+        .querySelectorAll(".tab")
+        .forEach((tab) => tab.classList.remove("active"));
+      document
+        .querySelectorAll(".tab-content")
+        .forEach((content) => content.classList.remove("active"));
+
+      const targetTabBtn = Array.from(document.querySelectorAll(".tab")).find(btn => btn.getAttribute("onclick") && btn.getAttribute("onclick").includes(`'${tabName}'`));
+      if (targetTabBtn) targetTabBtn.classList.add("active");
+
+      const targetContent = document.getElementById("tab-" + tabName);
+      if (targetContent) targetContent.classList.add("active");
+    }
+
+    function openAuthorProfileModal(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (!currentBook) return;
+
+      const profile = LR.getAuthorProfile(currentBook.penulis);
+      document.getElementById("authorModalName").textContent = profile.name;
+      document.getElementById("authorModalBio").textContent = profile.bio;
+
+      const modalAvatar = document.getElementById("authorModalAvatar");
+      if (profile.photo) {
+        modalAvatar.innerHTML = `<img src="${profile.photo}" alt="${profile.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+      } else {
+        const initials = profile.name
+          .split(" ")
+          .map((n) => n[0])
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+        modalAvatar.textContent = initials;
+      }
+
+      const authorBooks = LR.getBooksByAuthorName(currentBook.penulis, currentBook.id);
+      document.getElementById("authorModalBooks").textContent = authorBooks.length + 1;
+
+      document.getElementById("authorModalOverlay").classList.add("active");
+    }
+
+    function closeAuthorModal() {
+      document.getElementById("authorModalOverlay").classList.remove("active");
+    }
+
+    function setRating(stars) {
+      currentRating = stars;
+      const starSpans = document.querySelectorAll("#starInput span");
+      starSpans.forEach((span, index) => {
+        if (index < stars) {
+          span.classList.add("active");
+        } else {
+          span.classList.remove("active");
+        }
+      });
+    }
+
+    function submitReview() {
+      if (currentRating === 0) {
+        showModal("error", "Silakan pilih rating bintang", "");
+        return;
+      }
+
+      const text = document.getElementById("reviewText").value.trim();
+      if (!text) {
+        showModal("error", "Silakan tulis ulasan", "");
+        return;
+      }
+
+      const user = LR.getCurrentUser();
+      if (!user) {
+        showModal("error", "Silakan login untuk menulis ulasan", "");
+        return;
+      }
+
+      LR.addReview({
+        bookId: currentBook.id,
+        userEmail: user.email,
+        userName: user.name || user.fullname || "Anonim",
+        rating: currentRating,
+        text: text,
+      });
+
+      // Reset form
+      currentRating = 0;
+      document.getElementById("reviewText").value = "";
+      document
+        .querySelectorAll("#starInput span")
+        .forEach((span) => span.classList.remove("active"));
+
+      // Reload
+      loadRating();
+      loadReviews();
+      loadAuthorStats();
+      showModal("success", "Ulasan berhasil dikirim!", "");
+    }
+
+    function filterReviews(type) {
+      currentFilter = type;
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((btn) => btn.classList.remove("active"));
+      event.target.classList.add("active");
+      loadReviews();
+    }
+
+    function showModal(type, title, message) {
+      const overlay = document.getElementById("modalOverlay");
+      const iconContainer = document.getElementById("modalIcon");
+      const titleEl = document.getElementById("modalTitle");
+      const messageEl = document.getElementById("modalMessage");
+
+      // Set icons based on type
+      let iconSvg = "";
+      if (type === "success") {
+        iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+      } else if (type === "error") {
+        iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+      } else if (type === "info") {
+        iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+      }
+
+      iconContainer.innerHTML = iconSvg;
+      titleEl.textContent = title;
+      messageEl.textContent = message;
+
+      overlay.classList.add("active");
+    }
+
+    function closeModal() {
+      const overlay = document.getElementById("modalOverlay");
+      overlay.classList.remove("active");
+
+      // Redirect if URL is set
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+        redirectUrl = "";
+      }
+    }
+
+
+    function startReading() {
+      const user = LR.getCurrentUser();
+      if (!user) {
+        showModal(
+          "error",
+          "Silakan login untuk membaca",
+          "Anda perlu login terlebih dahulu",
+        );
+        redirectUrl = "login.html";
+        return;
+      }
+
+      const progress = LR.getProgress(currentBook.id, user.email);
+      if (!progress) {
+        LR.setProgress(currentBook.id, user.email, { lastPage: 1 });
+      } else {
+        LR.setProgress(currentBook.id, user.email, { updatedAt: Date.now() });
+      }
+
+      window.location.href = "baca_buku.html?id=" + currentBook.id;
+    }
+
+    function toggleFavorite() {
+      const user = LR.getCurrentUser();
+      if (!user) {
+        showModal(
+          "error",
+          "Silakan login",
+          "Anda perlu login untuk menambah ke favorit",
+        );
+        redirectUrl = "login.html";
+        return;
+      }
+
+      const isFav = LR.toggleFavorite(currentBook.id, user.email);
+      updateButtonStates();
+
+      showModal(
+        "success",
+        isFav ? "Ditambahkan ke Favorit" : "Dihapus dari Favorit",
+        isFav
+          ? "Buku berhasil ditambahkan ke daftar favorit Anda."
+          : "Buku telah dihapus dari daftar favorit.",
+      );
+    }
+
+    function toggleWishlist() {
+      const user = LR.getCurrentUser();
+      if (!user) {
+        showModal(
+          "error",
+          "Silakan login",
+          "Anda perlu login untuk menambah ke wishlist",
+        );
+        redirectUrl = "login.html";
+        return;
+      }
+
+      const isWish = LR.toggleWishlist(currentBook.id, user.email);
+      updateButtonStates();
+
+      showModal(
+        "success",
+        isWish ? "Ditambahkan ke Wishlist" : "Dihapus dari Wishlist",
+        isWish
+          ? "Buku berhasil ditambahkan ke wishlist Anda."
+          : "Buku telah dihapus dari wishlist.",
+      );
+    }
+
+    function shareBook() {
+      const url = window.location.href;
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          showModal(
+            "success",
+            "Link Disalin!",
+            "Link buku berhasil disalin ke clipboard.",
+          );
+        })
+        .catch(() => {
+          showModal(
+            "info",
+            "Salin Link",
+            "Silakan salin link berikut:\n\n" + url,
+          );
+        });
+    }
+
+    // Hamburger Menu Toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const navCollapse = document.getElementById("navCollapse");
+    if (menuToggle && navCollapse) {
+      menuToggle.addEventListener("click", function () {
+        menuToggle.classList.toggle("active");
+        navCollapse.classList.toggle("active");
+      });
+    }
+  </script>
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>

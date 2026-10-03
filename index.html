@@ -1,9 +1,883 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="id">
+
 <head>
-    <title>Website Pertamaku</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LokalReads - Dukung Karya Penulis Lokal</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    @font-face {
+      font-family: 'PP Writer';
+      src: url('asset/PPWriter-Bold.otf') format('opentype');
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Medium.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Semibold.otf') format('opentype');
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Bold.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SF Pro Display';
+      src: url('asset/SF Pro Display/SF-Pro-Display-Black.otf') format('opentype');
+      font-weight: 900;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Anti-Bentrokan Bootstrap */
+    a {
+      text-decoration: none !important;
+      color: inherit;
+    }
+
+    a:hover {
+      color: inherit;
+    }
+
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+      background-color: #f9f9f9;
+      color: #111111;
+      line-height: 1.6;
+    }
+
+    h1,
+    .btn-hero,
+    .btn-cta {
+      font-family: 'PP Writer', Georgia, serif;
+    }
+
+    .navbar {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111111;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: -20px;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+    }
+
+    .menu-toggle .bar {
+      height: 3px;
+      width: 100%;
+      background-color: #111111;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-collapse {
+      display: contents;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .nav-menu a {
+      color: #555555;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-menu a:hover {
+      color: #000000;
+    }
+
+    .nav-menu a.active {
+      color: #111111;
+      border-bottom: 2px solid #111111;
+    }
+
+    .nav-auth {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-login {
+      padding: 0.5rem 1.2rem;
+      color: #555555;
+      text-decoration: none;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-login:hover {
+      background: #f0f0f0;
+    }
+
+    .btn-register {
+      padding: 0.5rem 1.2rem;
+      background: #111111;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .btn-register:hover {
+      background: #222222;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #111111;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .hero {
+      padding: 8rem 2rem;
+      background-image: url('asset/download.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2.5rem;
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-hero {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: #ffffff !important;
+      color: #111111 !important;
+      text-decoration: none !important;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-hero:hover {
+      background: #111111 !important;
+      color: #ffffff !important;
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn-hero:active {
+      background: #111111 !important;
+      color: #ffffff !important;
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #111111;
+      text-align: center;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .book-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eaeaea;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .book-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      border-color: #dcdcdc;
+    }
+
+    .book-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    .book-card-info {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .book-card-title {
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 0.4rem;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      white-space: normal;
+    }
+
+    .book-card-author {
+      color: #666666;
+      font-size: 0.88rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .book-card-rating {
+      color: #f59e0b;
+      font-size: 0.88rem;
+      margin-top: auto;
+    }
+
+
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    @media (max-width: 968px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background-color: #111111;
+      color: #ffffff;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      border: 1.5px solid #111111;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      background: #ffffff;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .feature-icon img {
+      transition: filter 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      background-color: #111111 !important;
+      border-color: #ffffff !important;
+    }
+
+    .feature-card:hover .feature-icon img {
+      filter: invert(1);
+    }
+
+    .feature-card h3 {
+      margin-bottom: 0.5rem;
+      color: #111111;
+      transition: color 0.3s ease;
+    }
+
+    .feature-card:hover h3 {
+      color: #ffffff;
+    }
+
+    .feature-card p {
+      color: #555555;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .feature-card:hover p {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .cta {
+      background: linear-gradient(135deg, #111111 0%, #222222 100%);
+      color: #fff;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 12px;
+      margin: 3rem 0;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .btn-cta {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: #ffffff !important;
+      color: #111111 !important;
+      text-decoration: none !important;
+      border-radius: 8px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-cta:hover {
+      background: #111111 !important;
+      color: #ffffff !important;
+      border-color: #ffffff !important;
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 12px 28px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-cta:active {
+      background: #111111 !important;
+      color: #ffffff !important;
+      border-color: #ffffff !important;
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 8px 18px rgba(255, 255, 255, 0.15);
+    }
+
+    footer {
+      background: #000000;
+      color: #fff;
+      padding: 3rem 2rem 1rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .footer-section a {
+      display: block;
+      color: #fff;
+      opacity: 0.8;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-section a:hover {
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      opacity: 0.7;
+      font-size: 0.85rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #777777;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 5rem 1rem;
+        min-height: 400px;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .navbar-container {
+        padding: 0 1rem;
+      }
+
+      .logo {
+        margin-left: 0;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-collapse {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 1.5rem 2rem;
+        gap: 1.5rem;
+        margin-left: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        align-items: stretch;
+      }
+
+      .nav-collapse.active {
+        display: flex;
+      }
+
+      .nav-menu {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        width: 100%;
+        margin: 0;
+      }
+
+      .nav-menu a {
+        width: 100%;
+        padding: 0.5rem 0;
+      }
+
+      .nav-auth,
+      .user-menu {
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch;
+        gap: 0.8rem;
+        border-top: 1px solid #eaeaea;
+        padding-top: 1.2rem;
+      }
+
+      .btn-login,
+      .btn-register {
+        text-align: center;
+        width: 100%;
+      }
+
+      /* Hamburger animation when active */
+      .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+      }
+
+      .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+      }
+
+      .container {
+        padding: 2rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+
+      .book-card img {
+        height: 200px;
+      }
+
+      .book-card-info {
+        padding: 0.8rem;
+      }
+
+      .book-card-title {
+        font-size: 0.9rem;
+      }
+
+      .book-card-author {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Halo Dunia! Ini website pertamaku di GitHub Pages.</h1>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="logo">
+        <img src="asset/lokalreads_horizontal_logo_black.png" alt="LokalReads"
+          style="height: 32px; object-fit: contain;">
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <div class="nav-collapse" id="navCollapse">
+        <div class="nav-menu">
+          <a href="index.html" class="active">Home</a>
+          <a href="dashboard_user.html" id="navDashboard" style="display: none">Dashboard</a>
+        </div>
+        <div class="nav-auth" id="authSection">
+          <a href="login.html" class="btn-login">Masuk</a>
+          <a href="register_read.html" class="btn-register">Daftar</a>
+        </div>
+        <div class="user-menu" id="userSection" style="display: none">
+          <a href="dashboard_user.html" class="user-avatar" id="userAvatar">U</a>
+          <a href="#" onclick="
+                doLogout();
+                return false;
+              " class="btn-login">Keluar</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Dukung Karya Penulis Lokal Indonesia</h1>
+      <p>
+        Temukan ribuan karya literasi lokal dalam satu platform modern dan
+        interaktif.
+      </p>
+      <a href="dashboard_user.html" class="btn-hero">Mulai Membaca</a>
+    </div>
+  </section>
+
+
+
+  <div class="container" id="books">
+    <h2 class="section-title">Buku Populer</h2>
+    <div class="books-grid" id="booksGrid">
+      <div class="empty-state">
+        <p>Memuat buku...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2 class="section-title">Kenapa LokalReads?</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="foto/Penulis lOkal.png" alt="Penulis Lokal" style="width: 28px; height: 28px; object-fit: contain;">
+        </div>
+        <h3>Dukung Penulis Lokal</h3>
+        <p>Mendukung penulis lokal dan UMKM kreatif untuk terus berkarya.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="foto/inklusif.png" alt="Sistem Inklusif" style="width: 28px; height: 28px; object-fit: contain;">
+        </div>
+        <h3>Sistem Inklusif</h3>
+        <p>
+          Ruang inklusif berbasis komunitas untuk semua lapisan masyarakat.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="foto/algoritma.png" alt="Rekomendasi Pintar"
+            style="width: 28px; height: 28px; object-fit: contain;">
+        </div>
+        <h3>Rekomendasi Pintar</h3>
+        <p>
+          Algoritma berbasis minat yang membantu menemukan buku favoritmu.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="foto/ekosistem digital.png" alt="Ekosistem Digital"
+            style="width: 28px; height: 28px; object-fit: contain;">
+        </div>
+        <h3>Ekosistem Digital</h3>
+        <p>
+          Meningkatkan kualitas konten lokal melalui wadah digital kreatif.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="cta">
+      <h2>Bergabung Sekarang</h2>
+      <p>
+        Jadilah bagian dari komunitas pembaca dan penulis lokal terbesar di
+        Indonesia.
+      </p>
+      <a href="register_read.html" class="btn-cta">Daftar Gratis</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <img src="asset/lokalreads_horizontal_logo_white.png" alt="LokalReads"
+          style="height: 32px; object-fit: contain; margin-bottom: 15px; display: block;">
+        <p style="opacity: 0.8; font-size: 0.9rem">
+          Platform e-book lokal Indonesia untuk mendukung penulis dan UMKM
+          kreatif.
+        </p>
+      </div>
+      <div class="footer-section">
+        <h4>Home</h4>
+        <a href="dashboard_user.html">Semua Buku</a>
+        <a href="index.html">Kategori</a>
+      </div>
+      <div class="footer-section">
+        <h4>Pembaca</h4>
+        <a href="dashboard_user.html">Dashboard Pembaca</a>
+        <a href="index.html">Mulai Membaca</a>
+      </div>
+      <div class="footer-section">
+        <h4>Informasi</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 LokalReads. All rights reserved.</div>
+  </footer>
+
+  <script src="lokalreads.js"></script>
+  <script>
+    // ⚠️ TIDAK ADA AUTO-REDIRECT - User bisa bebas akses index.html
+    let currentUser = null;
+
+    document.addEventListener("DOMContentLoaded", function () {
+      checkAuth();
+      loadBooks();
+
+      // Hamburger Menu Toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const navCollapse = document.getElementById("navCollapse");
+      if (menuToggle && navCollapse) {
+        menuToggle.addEventListener("click", function () {
+          menuToggle.classList.toggle("active");
+          navCollapse.classList.toggle("active");
+        });
+      }
+    });
+
+    function checkAuth() {
+      currentUser = LR.getCurrentUser();
+
+      if (currentUser) {
+        document.getElementById("authSection").style.display = "none";
+        document.getElementById("userSection").style.display = "flex";
+
+        const initials = (currentUser.name || currentUser.fullname || "U")
+          .split(" ")
+          .map((n) => n[0])
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+        document.getElementById("userAvatar").textContent = initials;
+        document.getElementById("navDashboard").style.display = "block";
+      }
+    }
+
+    function doLogout() {
+      if (confirm("Apakah Anda yakin ingin keluar?")) {
+        LR.logout();
+        window.location.reload();
+      }
+    }
+
+    function loadBooks() {
+      const books = LR.getBooks();
+      const container = document.getElementById("booksGrid");
+      if (!container) return;
+
+      if (books.length === 0) {
+        container.innerHTML =
+          '<div class="empty-state"><p>Belum ada buku tersedia</p></div>';
+        return;
+      }
+
+      // Limit to 4 books for the landing page preview
+      const previewBooks = books.slice(0, 4);
+
+      container.innerHTML = previewBooks
+        .map((book) => {
+          const rating = LR.getRating(book.id);
+          return `
+                    <div class="book-card" onclick="window.location.href='detail_buku.html?id=${encodeURIComponent(book.id)}'">
+                        <img src="${book.img || "asset/cover.jpg"}" alt="${book.judul}">
+                        <div class="book-card-info">
+                            <div class="book-card-title">${book.judul}</div>
+                            <div class="book-card-author">${book.penulis}</div>
+                            <div class="book-card-rating">${LR.starString(rating.avg)} (${rating.count})</div>
+                        </div>
+                    </div>
+                `;
+        })
+        .join("");
+    }
+  </script>
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
